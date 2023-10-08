@@ -1,0 +1,22 @@
+/* @author Mónica Miranda Mijangos 
+  @author Eduardo Leónel Sánchez Velasco 
+  Version: 1
+  Fecha: 02/10/2023 */
+
+.card {
+    max-width: 1280px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+h1 {
+    color: rgb(32, 170, 147) !important;
+}
+
+table:not(.A) {
+    text-align: center;
+}
+
+.A {
+    text-align: left;
+}
