@@ -1,90 +1,88 @@
 <!-- C A R D -->
 <div class="card">
-    <div class="card-body">
-      <!-- T I T U L O - V I S T A -->
-      <div class="title">
-        <h1> Listado de Categorías </h1>
-      </div>
-      <!-- T A B L A - C A T E G O R I A S -->
-      <table class="table table-hover">
-        <caption>
-          Categorías
-        </caption>
-        <thead>
-          <tr class="table-primary">
-            <th scope="col" class="A"> ID_Categoría </th>
-            <th scope="col"> Código </th>
-            <th scope="col"> Categoría </th>
-            <th scope="col"> Estatus </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let content of categories">
-            <th scope="row" class="A"> 0{{ content.category_id }} </th>
-            <td> {{ content.code }} </td>
-            <td> {{ content.category }} </td>
-            <td> {{ content.status == 0 ? "Inactivo": "Activo" }} </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="card-body">
+    <!-- T I T U L O - V I S T A -->
+    <div class="title">
+      <h1> Listado de Categorías </h1>
     </div>
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Nueva categoria
-</button>
+    <!-- T A B L A - C A T E G O R I A S -->
+    <table class="table table-hover">
+      <caption>
+        Categorías
+      </caption>
+      <thead>
+        <tr class="table-primary">
+          <th scope="col" class="A"> ID_Categoría </th>
+          <th scope="col"> Código </th>
+          <th scope="col"> Categoría </th>
+          <th scope="col"> Estatus </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let content of categories">
+          <th scope="row" class="A"> 0{{ content.category_id }} </th>
+          <td> {{ content.code }} </td>
+          <td> {{ content.category }} </td>
+          <td> {{ content.status == 0 ? "Inactivo": "Activo" }} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalForm">
+    Nueva categoria
+  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+  <!-- Modal -->
+  <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"> Nueva Categoria </h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span class="modal-close-button-x">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
 
-         <!-- form  -->
+          <!-- form  -->
 
-         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-          <!-- categoria  -->
+            <!-- categoria  -->
 
-          <div class="form-group">
-            <label for="category">Categoria <span class="color-red">*</span> </label>
-            <input type="text" class="form-control" formControlName="category" id="category" placeholder="Nombre de la categoria..." 
-              [ngClass]="{'is-invalid': form.controls['category'].errors && submitted}" >
-            <div *ngIf="form.controls['category'].errors && submitted">
-              <small class="color-red">Favor de ingresar una categoria válida</small>
+            <div class="form-group">
+              <label for="category">Categoria <span class="color-red">*</span> </label>
+              <input type="text" class="form-control" formControlName="category" id="category"
+                placeholder="Nombre de la categoria..."
+                [ngClass]="{'is-invalid': form.controls['category'].errors && submitted}">
+              <div *ngIf="form.controls['category'].errors && submitted">
+                <small class="color-red">Favor de ingresar una categoria válida</small>
+              </div>
             </div>
-          </div>
 
-          <!-- code  -->
+            <!-- code  -->
 
-          <div class="form-group">
-            <label for="code">Código <span class="color-red">*</span> </label>
-            <input type="text" class="form-control" formControlName="code" id="code" placeholder="Código de la región..." 
-              [ngClass]="{'is-invalid': form.controls['code'].errors && submitted}" >
-            <div *ngIf="form.controls['code'].errors && submitted">
-              <small class="color-red">Favor de ingresar un código de categoria válido</small>
+            <div class="form-group">
+              <label for="code">Código <span class="color-red">*</span> </label>
+              <input type="text" class="form-control" formControlName="code" id="code"
+                placeholder="Código de la región..."
+                [ngClass]="{'is-invalid': form.controls['code'].errors && submitted}">
+              <div *ngIf="form.controls['code'].errors && submitted">
+                <small class="color-red">Favor de ingresar un código de categoria válido</small>
+              </div>
             </div>
-          </div>
 
-          <!-- button  -->
-          
-          <div class="form-button">
-            <button type="submit" class="btn btn-primary btn-form">Guardar</button>
-          </div>
+            <!-- button  -->
 
-        </form>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="form-button">
+              <button type="submit" class="btn btn-primary btn-form">Guardar</button>
+            </div>
+
+          </form>
+
+        </div>
       </div>
     </div>
   </div>
 </div>
-  </div>  

@@ -50,7 +50,7 @@ export class CategoryComponent {
 
     this.submitted = false;
 
-    let category = new Category(0, this.form.controls['category'].value!, this.form.controls['code'].value!, 1);
+    let category = new Category(0, this.form.controls['code'].value!, this.form.controls['category'].value!, 1);
     this.categories.push(category);
     
     $("#modalForm").modal("hide");

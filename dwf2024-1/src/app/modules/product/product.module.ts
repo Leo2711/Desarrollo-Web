@@ -6,8 +6,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryComponent } from './components/category/category.component';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -16,7 +15,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     CategoryComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    CategoryComponent,
   ]
 })
 export class ProductModule { }
