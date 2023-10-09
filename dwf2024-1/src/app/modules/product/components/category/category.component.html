@@ -28,4 +28,63 @@
         </tbody>
       </table>
     </div>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Nueva categoria
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+         <!-- form  -->
+
+         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <!-- categoria  -->
+
+          <div class="form-group">
+            <label for="category">Categoria <span class="color-red">*</span> </label>
+            <input type="text" class="form-control" formControlName="category" id="category" placeholder="Nombre de la categoria..." 
+              [ngClass]="{'is-invalid': form.controls['category'].errors && submitted}" >
+            <div *ngIf="form.controls['category'].errors && submitted">
+              <small class="color-red">Favor de ingresar una categoria válida</small>
+            </div>
+          </div>
+
+          <!-- code  -->
+
+          <div class="form-group">
+            <label for="code">Código <span class="color-red">*</span> </label>
+            <input type="text" class="form-control" formControlName="code" id="code" placeholder="Código de la región..." 
+              [ngClass]="{'is-invalid': form.controls['code'].errors && submitted}" >
+            <div *ngIf="form.controls['code'].errors && submitted">
+              <small class="color-red">Favor de ingresar un código de categoria válido</small>
+            </div>
+          </div>
+
+          <!-- button  -->
+          
+          <div class="form-button">
+            <button type="submit" class="btn btn-primary btn-form">Guardar</button>
+          </div>
+
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
   </div>  
