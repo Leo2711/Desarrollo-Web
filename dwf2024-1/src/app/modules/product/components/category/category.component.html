@@ -5,6 +5,11 @@
     <div class="title">
       <h1> Listado de Categorías </h1>
     </div>
+    <!-- Button trigger modal -->
+
+    <div class = "botonDer">
+      <button type="button" class="btn btn-primary btn-new" (click)="showModalForm()">Nueva categoria</button>
+    </div>
     <!-- T A B L A - C A T E G O R I A S -->
     <table class="table table-hover">
       <caption>
@@ -28,10 +33,6 @@
       </tbody>
     </table>
   </div>
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalForm">
-    Nueva categoria
-  </button>
 
   <!-- Modal -->
   <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-bs-backdrop="static">
@@ -39,7 +40,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title"> Nueva Categoria </h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <button type="button" class="modal-close-button" data-bs-dismiss="modal" aria-label="Close">
             <span class="modal-close-button-x">&times;</span>
           </button>
         </div>
