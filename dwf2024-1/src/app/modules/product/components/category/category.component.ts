@@ -17,6 +17,7 @@ declare var $: any;
 export class CategoryComponent {
 
   categories: Category[] = [];
+  categoryUpdated: number = 0;
 
   form = this.formBuilder.group({
     category: ["", [Validators.required]],
@@ -63,6 +64,40 @@ export class CategoryComponent {
 
   showModalForm(){
     this.form.reset();
+    this.submitted = false;
+    $("#modalForm").modal("show");
+  }
+
+  // CRUD
+
+  disableCategory(id: number){
+    for(let Category of this.categories){
+      if(Category.category_id == id){
+        Category.status = 0;
+        alert("Región desactivada exitosamente!");
+        break;
+      }
+    }
+    console.log("SALIR")
+  }
+
+  enableCategory(id: number){
+    for(let Category of this.categories){
+      if(Category.category_id == id){
+        Category.status = 1;
+        alert("Región activada exitosamente!");
+        break;
+      }
+    }
+  }
+
+  updateCategory(Category: Category){
+    this.categoryUpdated = Category.category_id;
+    
+    this.form.reset();
+    this.form.controls['category'].setValue(Category.category);
+    this.form.controls['code'].setValue(Category.code);
+    
     this.submitted = false;
     $("#modalForm").modal("show");
   }
