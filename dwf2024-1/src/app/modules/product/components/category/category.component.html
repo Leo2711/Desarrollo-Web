@@ -1,31 +1,89 @@
 <!-- C A R D -->
 <div class="card">
-    <div class="card-body">
-      <!-- T I T U L O - V I S T A -->
-      <div class="title">
-        <h1> Listado de Categorías </h1>
-      </div>
-      <!-- T A B L A - C A T E G O R I A S -->
-      <table class="table table-hover">
-        <caption>
-          Categorías
-        </caption>
-        <thead>
-          <tr class="table-primary">
-            <th scope="col" class="A"> ID_Categoría </th>
-            <th scope="col"> Código </th>
-            <th scope="col"> Categoría </th>
-            <th scope="col"> Estatus </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let content of categories">
-            <th scope="row" class="A"> 0{{ content.category_id }} </th>
-            <td> {{ content.code }} </td>
-            <td> {{ content.category }} </td>
-            <td> {{ content.status == 0 ? "Inactivo": "Activo" }} </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="card-body">
+    <!-- T I T U L O - V I S T A -->
+    <div class="title">
+      <h1> Listado de Categorías </h1>
     </div>
-  </div>  
+    <!-- Button trigger modal -->
+
+    <div class = "botonDer">
+      <button type="button" class="btn btn-primary btn-new" (click)="showModalForm()">Nueva categoria</button>
+    </div>
+    <!-- T A B L A - C A T E G O R I A S -->
+    <table class="table table-hover">
+      <caption>
+        Categorías
+      </caption>
+      <thead>
+        <tr class="table-primary">
+          <th scope="col" class="A"> ID_Categoría </th>
+          <th scope="col"> Código </th>
+          <th scope="col"> Categoría </th>
+          <th scope="col"> Estatus </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let content of categories">
+          <th scope="row" class="A"> 0{{ content.category_id }} </th>
+          <td> {{ content.code }} </td>
+          <td> {{ content.category }} </td>
+          <td> {{ content.status == 0 ? "Inactivo": "Activo" }} </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"> Nueva Categoria </h5>
+          <button type="button" class="modal-close-button" data-bs-dismiss="modal" aria-label="Close">
+            <span class="modal-close-button-x">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <!-- form  -->
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <!-- categoria  -->
+
+            <div class="form-group">
+              <label for="category">Categoria <span class="color-red">*</span> </label>
+              <input type="text" class="form-control" formControlName="category" id="category"
+                placeholder="Nombre de la categoria..."
+                [ngClass]="{'is-invalid': form.controls['category'].errors && submitted}">
+              <div *ngIf="form.controls['category'].errors && submitted">
+                <small class="color-red">Favor de ingresar una categoria válida</small>
+              </div>
+            </div>
+
+            <!-- code  -->
+
+            <div class="form-group">
+              <label for="code">Código <span class="color-red">*</span> </label>
+              <input type="text" class="form-control" formControlName="code" id="code"
+                placeholder="Código de la región..."
+                [ngClass]="{'is-invalid': form.controls['code'].errors && submitted}">
+              <div *ngIf="form.controls['code'].errors && submitted">
+                <small class="color-red">Favor de ingresar un código de categoria válido</small>
+              </div>
+            </div>
+
+            <!-- button  -->
+
+            <div class="form-button">
+              <button type="submit" class="btn btn-primary btn-form">Guardar</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
