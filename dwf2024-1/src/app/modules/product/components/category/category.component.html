@@ -7,7 +7,7 @@
     </div>
     <!-- Button trigger modal -->
 
-    <div class = "botonDer">
+    <div class="botonDer">
       <button type="button" class="btn btn-primary btn-new" (click)="showModalForm()">
         <i class="ph ph-plus-circle icon-text-button"></i>
         Nueva categoria
@@ -32,25 +32,33 @@
           <th scope="row" class="A"> 0{{ content.category_id }} </th>
           <td> {{ content.code }} </td>
           <td> {{ content.category }} </td>
-          <td> {{ content.status == 0 ? "Inactivo": "Activo" }} </td>
+          <td>
+            <div class="td-status"
+              [ngClass]="{'td-status-enable': content.status == 1, 'td-status-disable': content.status == 0}">
+              {{ content.status == 0 ? "Inactivo": "Activo" }}
+            </div>
+          </td>
           <td>
             <div class="dropdown">
-              <button class="dropdown-button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="dropdown-button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
                 <i class="ph ph-dots-three-outline-vertical icon-menu"></i>
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" (click)="updateCategory(content)">
                   <i class="ph ph-note-pencil icon-text-ul"></i>Editar
                 </a>
-                <a *ngIf="content.status == 0" class="dropdown-item enable-item" (click)="enableCategory(content.category_id)">
+                <a *ngIf="content.status == 0" class="dropdown-item enable-item"
+                  (click)="enableCategory(content.category_id)">
                   <i class="ph ph-check-circle icon-text-ul"></i> Activar
                 </a>
-                <a *ngIf="content.status == 1" class="dropdown-item disable-item" (click)="disableCategory(content.category_id)">
+                <a *ngIf="content.status == 1" class="dropdown-item disable-item"
+                  (click)="disableCategory(content.category_id)">
                   <i class="ph ph-x-circle icon-text-ul"></i> Desactivar
                 </a>
               </div>
             </div>
-            
+
           </td>
         </tr>
       </tbody>
