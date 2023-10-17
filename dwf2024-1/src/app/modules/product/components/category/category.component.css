@@ -10,7 +10,7 @@
 }
 
 h1 {
-    color: rgb(32, 170, 147) !important;
+    color: #78c2ad !important;
 }
 
 table:not(.A) {
@@ -27,6 +27,8 @@ table:not(.A) {
     top: 15px;
 }
 
+/* Modal */
+
 .modal-content {
     padding: 0px 8px;
 }
@@ -42,17 +44,11 @@ table:not(.A) {
 .form-button {
     margin-top: 32px;
     margin-bottom: 16px;
-
     text-align: center;
 }
 
-.btn-new {
-    float: right;
-    width: 200px;
-}
-
 .btn-form {
-    width: 200px;
+    width: 100px;
 }
 
 .modal-close-button {
@@ -71,20 +67,46 @@ table:not(.A) {
     color: red;
 }
 
-/* Icon  */
-
-.icon-text-button {
-    font-size: 14px;
-    margin-right: 4px;
+.btn-new {
+    float: right;
+    width: 200px;
+    font-weight: 450;    
 }
 
+/* Icons  */
+
+.icon-text-button {
+    font-size: 20px;
+    margin-right: 2px;    
+}
+
+/* Status */
+
+.td-status-enable {    
+    width: 100px;
+    margin: auto;
+    background-color: #78c2ad;
+    color: white;
+    border-radius: 18px;
+}
+
+.td-status-disable {    
+    width: 100px;
+    margin: auto;
+    background-color: #f3969a;
+    color: white;
+    border-radius: 18px;
+}
+
+/* Dots */
+
 .icon-text-ul {
-    font-size: 14px;
+    font-size: 16px;
     margin-right: 8px;
 }
 
 .icon-menu {
-    font-size: 14px;
+    font-size: 17px;
     cursor: pointer;
 }
 
@@ -99,6 +121,11 @@ table:not(.A) {
     background-color: white;
 }
 
+.dropdown-button:hover {
+    border: none;
+    background-color: #e8e8e8;
+}
+
 .dropdown-item {
     color: black !important;
     cursor: pointer;
@@ -109,7 +136,7 @@ table:not(.A) {
 }
 
 .enable-item {
-    color: blue !important;
+    color: #78c2ad !important;
     cursor: pointer;
 }
 
