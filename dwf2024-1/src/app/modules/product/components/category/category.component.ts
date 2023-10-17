@@ -128,8 +128,10 @@ export class CategoryComponent {
   // modals 
 
   showModalForm(){
+    this.categoryUpdated =0
     this.form.reset();
     this.submitted = false;
     $("#modalForm").modal("show");
   }
+  
 }
