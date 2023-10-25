@@ -48,7 +48,7 @@ export class CategoryService {
   /**
    * Consume el endpoint de la API consultar las categorías.
   */
-  getCategorys() {
+  getCategories() {
     return this.http.get<Category[]>(this.url + this.route);
   }
   

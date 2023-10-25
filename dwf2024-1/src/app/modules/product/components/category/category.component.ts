@@ -1,7 +1,7 @@
 /* @author Mónica Miranda Mijangos 
   @author Eduardo Leónel Sánchez Velasco 
-  Version: 2
-  Fecha: 16/10/2023 */
+  Version: 3
+  Fecha: 25/10/2023 */
 
 import { Component } from '@angular/core';
 import { Category } from '../../_models/category';
@@ -30,23 +30,29 @@ export class CategoryComponent {
   constructor(
     private formBuilder: FormBuilder,
     private categoryService: CategoryService
-  ){}
+  ) {}
 
   ngOnInit() {
     this.getCategories();
   }
 
   getCategories() {
-    let category1 = new Category(1, "Column content", "Column content", 1);
-    let category2 = new Category(2, "Column content", "Column content", 1);
-    let category3 = new Category(3, "Column content", "Column content", 0);
-
-    this.categories.push(category1);
-    this.categories.push(category2);
-    this.categories.push(category3);
+    this.categoryService.getCategories().subscribe(
+      res => {
+        this.categories = res; // lista de categorías de la API
+      },
+      err => {
+        // mensaje de error
+      }
+    );
   }
 
-  onSubmit(){
+  onSubmit() {
+    // validación
+    this.submitted = true;
+    if (this.form.invalid) return;
+    this.submitted = false;
+    
     if(this.categoryUpdated == 0){
       this.onSubmitCreate();
     }else{
@@ -54,69 +60,65 @@ export class CategoryComponent {
     }
   }
 
-  onSubmitCreate(){
-    this.submitted = true;
+  onSubmitCreate() {
+    this.categoryService.createCategory(this.form.value).subscribe(
+      res => {
+        // mensaje de confirmación
+      
+        this.getCategories();
 
-    if(this.form.invalid) return;
-
-    this.submitted = false;
-
-    let category = new Category(0, this.form.controls['code'].value!, this.form.controls['category'].value!, 1);
-    this.categories.push(category);
-    
-    $("#modalForm").modal("hide");
-
-    alert("Categoria guardada exitosamente!");
-
+        $("#modalForm").modal("hide");
+      },
+      err => {
+        // mensaje de error
+      }
+    );
   }
 
-  onSubmitUpdate(){
-    this.submitted = true;
-
-    if(this.form.invalid) return;
-
-    this.submitted = false;
-
-    for(let category of this.categories){
-      if(category.category_id == this.categoryUpdated){
-        category.category = this.form.controls['category'].value!;
-        category.code = this.form.controls['code'].value!;
-        break;
-      }
-    }
+  onSubmitUpdate() {
+    this.categoryService.updateCategory(this.form.value, this.categoryUpdated).subscribe(
+      res => {
+        // mensaje de confirmación      
     
-    $("#modalForm").modal("hide");
+        this.getCategories();
 
-    alert("Región actualizada exitosamente!");
+        $("#modalForm").modal("hide");
 
-    this.categoryUpdated = 0;
-
+        this.categoryUpdated = 0;
+      },
+      err => {
+        // mensaje error
+      }
+    );
   }
 
   // CRUD
 
-  disableCategory(id: number){
-    for(let Category of this.categories){
-      if(Category.category_id == id){
-        Category.status = 0;
-        alert("Región desactivada exitosamente!");
-        break;
+  disableCategory(id: number) {
+    this.categoryService.disableCategory(id).subscribe (
+      res => {
+        // mensaje de confirmación
+        this.getCategories();
+      }, 
+      err => {
+        // mensaje de error
       }
-    }
-    console.log("SALIR")
+    );
   }
 
-  enableCategory(id: number){
-    for(let Category of this.categories){
-      if(Category.category_id == id){
-        Category.status = 1;
-        alert("Región activada exitosamente!");
-        break;
+  enableCategory(id: number) {
+    this.categoryService.enableCategory(id).subscribe (
+      res => {
+        // mensaje de confirmación
+        this.getCategories();
+      }, 
+      err => {
+        // mensaje de error
       }
-    }
+    );
   }
 
-  updateCategory(Category: Category){
+  updateCategory(Category: Category) {
     this.categoryUpdated = Category.category_id;
     
     this.form.reset();
@@ -130,7 +132,7 @@ export class CategoryComponent {
   // modals 
 
   showModalForm(){
-    this.categoryUpdated =0
+    this.categoryUpdated = 0;
     this.form.reset();
     this.submitted = false;
     $("#modalForm").modal("show");
