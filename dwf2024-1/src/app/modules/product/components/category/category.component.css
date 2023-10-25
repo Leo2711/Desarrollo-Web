@@ -133,6 +133,7 @@ table:not(.A) {
 
 .dropdown-item:hover {
     color: white !important;
+    background-color: #6cc3d5;
 }
 
 .enable-item {
@@ -142,13 +143,15 @@ table:not(.A) {
 
 .enable-item:hover {
     color: white !important;
+    background-color: #78c2ad;
 }
 
 .disable-item {
-    color: red !important;
+    color: #f3969a !important;
     cursor: pointer;
 }
 
 .disable-item:hover {
     color: white !important;
+    background-color: #f3969a;
 }
