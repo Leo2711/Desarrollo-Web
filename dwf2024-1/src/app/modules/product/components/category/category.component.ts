@@ -6,6 +6,7 @@
 import { Component } from '@angular/core';
 import { Category } from '../../_models/category';
 import { FormBuilder, Validators } from '@angular/forms';
+import { CategoryService } from "../../_services/category.service";
 
 declare var $: any;
 
@@ -28,6 +29,7 @@ export class CategoryComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private categoryService: CategoryService
   ){}
 
   ngOnInit() {
