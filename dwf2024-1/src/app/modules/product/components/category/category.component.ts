@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { Category } from '../../_models/category';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from "../../_services/category.service";
-
+import Swal from 'sweetalert2'
 declare var $: any;
 
 @Component({
@@ -39,10 +39,23 @@ export class CategoryComponent {
   getCategories() {
     this.categoryService.getCategories().subscribe(
       res => {
+        /** 
+        Swal.fire({
+          icon: 'success',
+          title: 'Categories Obtained',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        */
         this.categories = res; // lista de categorías de la API
       },
       err => {
-        // mensaje de error
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong getting the data',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     );
   }
@@ -63,14 +76,24 @@ export class CategoryComponent {
   onSubmitCreate() {
     this.categoryService.createCategory(this.form.value).subscribe(
       res => {
-        // mensaje de confirmación
+        Swal.fire({
+          icon: 'success',
+          title: 'New category added',
+          showConfirmButton: false,
+          timer: 1500
+        })
       
         this.getCategories();
 
         $("#modalForm").modal("hide");
       },
       err => {
-        // mensaje de error
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong on submitting the data!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     );
   }
@@ -79,7 +102,12 @@ export class CategoryComponent {
     this.categoryService.updateCategory(this.form.value, this.categoryUpdated).subscribe(
       res => {
         // mensaje de confirmación      
-    
+        Swal.fire({
+          icon: 'success',
+          title: 'New category updated',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getCategories();
 
         $("#modalForm").modal("hide");
@@ -87,7 +115,12 @@ export class CategoryComponent {
         this.categoryUpdated = 0;
       },
       err => {
-        // mensaje error
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong on submitting the data!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     );
   }
@@ -97,11 +130,21 @@ export class CategoryComponent {
   disableCategory(id: number) {
     this.categoryService.disableCategory(id).subscribe (
       res => {
-        // mensaje de confirmación
+        Swal.fire({
+          icon: 'success',
+          title: 'Category disabled',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getCategories();
       }, 
       err => {
-        // mensaje de error
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong, couldnt disabel the item!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     );
   }
@@ -109,11 +152,21 @@ export class CategoryComponent {
   enableCategory(id: number) {
     this.categoryService.enableCategory(id).subscribe (
       res => {
-        // mensaje de confirmación
+        Swal.fire({
+          icon: 'success',
+          title: 'Category enabled',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.getCategories();
       }, 
       err => {
-        // mensaje de error
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong, couldnt enable the item!',
+          footer: '<a href="">Why do I have this issue?</a>'
+        })
       }
     );
   }
