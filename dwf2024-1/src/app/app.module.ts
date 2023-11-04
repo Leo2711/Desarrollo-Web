@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { LayoutModule } from './modules/layout/layout.module';
-import { ProductModule } from './modules/product/product.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { ProductModule } from './modules/product/product.module';
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    ProductModule
+    CategoryModule
   ],
   providers: [],
   bootstrap: [AppComponent]
