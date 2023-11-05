@@ -53,8 +53,7 @@ export class CategoryComponent {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong getting the data',
-          footer: '<a href="">Why do I have this issue?</a>'
+          text: 'Algo salió mal al obtener los datos.'
         })
       }
     );
@@ -78,7 +77,7 @@ export class CategoryComponent {
       res => {
         Swal.fire({
           icon: 'success',
-          title: 'New category added',
+          title: 'Nueva categoría creada',
           showConfirmButton: false,
           timer: 1500
         })
@@ -91,8 +90,7 @@ export class CategoryComponent {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong on submitting the data!',
-          footer: '<a href="">Why do I have this issue?</a>'
+          text: '¡Algo salió mal al crear los datos!'
         })
       }
     );
@@ -104,7 +102,7 @@ export class CategoryComponent {
         // mensaje de confirmación      
         Swal.fire({
           icon: 'success',
-          title: 'New category updated',
+          title: 'Categoría actualizada!',
           showConfirmButton: false,
           timer: 1500
         })
@@ -118,8 +116,7 @@ export class CategoryComponent {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong on submitting the data!',
-          footer: '<a href="">Why do I have this issue?</a>'
+          text: '¡Algo salió mal al actualizar los datos!'
         })
       }
     );
@@ -132,7 +129,7 @@ export class CategoryComponent {
       res => {
         Swal.fire({
           icon: 'success',
-          title: 'Category disabled',
+          title: 'Categoría deshabilitada!',
           showConfirmButton: false,
           timer: 1500
         })
@@ -142,8 +139,7 @@ export class CategoryComponent {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong, couldnt disabel the item!',
-          footer: '<a href="">Why do I have this issue?</a>'
+          text: '¡Algo salió mal, no se pudo deshabilitar el elemento!'
         })
       }
     );
@@ -154,7 +150,7 @@ export class CategoryComponent {
       res => {
         Swal.fire({
           icon: 'success',
-          title: 'Category enabled',
+          title: 'Categoría habilitada!',
           showConfirmButton: false,
           timer: 1500
         })
@@ -164,8 +160,7 @@ export class CategoryComponent {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong, couldnt enable the item!',
-          footer: '<a href="">Why do I have this issue?</a>'
+          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
         })
       }
     );

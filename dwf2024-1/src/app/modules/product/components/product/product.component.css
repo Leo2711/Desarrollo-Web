@@ -3,7 +3,7 @@
   Version: 2
   Fecha: 16/10/2023 */
 
-  .card {
+.card {
     max-width: 1080px;
     margin: auto;
     margin-top: 20px;
@@ -30,6 +30,7 @@ table:not(.A) {
 /* Modal */
 
 .modal-content {
+    width: 800px;
     padding: 0px 8px;
 }
 

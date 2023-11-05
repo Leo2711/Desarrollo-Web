@@ -52,28 +52,21 @@ export class ProductComponent {
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
-          position: 'top-end',
           icon: 'success',
-          toast: true,
-          text: 'El producto ha sido desactivado',
-          background: '#E8F8F8',
+          title: 'Categoría deshabilitada!',
           showConfirmButton: false,
-          timer: 2000
-        });
+          timer: 1500
+        })
 
         this.getProducts(); // consulta productos con los cambios realizados
       },
       err => {
         // muestra mensaje de error
         Swal.fire({
-          position: 'top-end',
           icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+          title: 'Oops...',
+          text: '¡Algo salió mal, no se pudo deshabilitar el elemento!'
+        })
       }
     );
   }
@@ -83,28 +76,21 @@ export class ProductComponent {
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
-          position: 'top-end',
           icon: 'success',
-          toast: true,
-          text: 'El producto ha sido activado',
-          background: '#E8F8F8',
+          title: 'Categoría habilitada!',
           showConfirmButton: false,
-          timer: 2000
-        });
+          timer: 1500
+        })
 
         this.getProducts(); // consulta productos con los cambios realizados
       },
       err => {
         // muestra mensaje de error
         Swal.fire({
-          position: 'top-end',
           icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+          title: 'Oops...',
+          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
+        })
       }
     );
   }
@@ -117,14 +103,10 @@ export class ProductComponent {
       err => {
         // muestra mensaje de error
         Swal.fire({
-          position: 'top-end',
           icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+          title: 'Oops...',
+          text: 'Algo salió mal al obtener los datos.'
+        })
       }
     );
   }
@@ -139,14 +121,11 @@ export class ProductComponent {
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
-          position: 'top-end',
           icon: 'success',
-          toast: true,
-          text: 'El producto ha sido registrado',
-          background: '#E8F8F8',
+          title: 'Nuevo producto creado',
           showConfirmButton: false,
-          timer: 2000
-        });
+          timer: 1500
+        })
 
         this.getProducts(); // consulta productos con los cambios realizados
 
@@ -155,14 +134,10 @@ export class ProductComponent {
       err => {
         // muestra mensaje de error
         Swal.fire({
-          position: 'top-end',
           icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+          title: 'Oops...',
+          text: '¡Algo salió mal al crear los datos!'
+        })
       }
     );
   }
@@ -181,14 +156,10 @@ export class ProductComponent {
       err => {
         // muestra mensaje de error
         Swal.fire({
-          position: 'top-end',
           icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+          title: 'Oops...',
+          text: 'Algo salió mal al obtener los datos.'
+        })
       }
     );
   }
