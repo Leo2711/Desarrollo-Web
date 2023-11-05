@@ -1,0 +1,118 @@
+<!-- C A R D -->
+<div class="card">
+    <div class="card-body">
+        <!-- T I T U L O - V I S T A -->
+        <div class="title">
+            <h1> Listado de Productos </h1>
+        </div>
+        <!-- Button trigger modal -->
+
+        <div class="botonDer">
+            <button type="button" class="btn btn-primary btn-new" (click)="showModalForm()">
+                <i class="ph ph-plus-circle icon-text-button"></i>
+                Nuevo producto
+            </button>
+        </div>
+        <!-- T A B L A - C A T E G O R I A S -->
+        <table class="table table-hover">
+            <caption>
+                Productos
+            </caption>
+            <thead>
+                <tr class="table-primary">
+                    <th>No.</th>
+                    <th>GTIN</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Estatus</th>
+                    <th>Más</th>
+                  </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ product.gtin }}</td>
+                    <td>{{ product.product }}</td>
+                    <td>{{ product.price | currency: 'USD' }}</td>
+                    <td>
+                      <div class="td-status"
+                      [ngClass]="{'td-status-enable': product.status == 1, 'td-status-disable': product.status == 0}" >
+                        {{ product.status == 0 ? "Inactivo" : "Activo" }}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="dropdown-button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="ph ph-dots-three-outline-vertical icon-menu"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item"  (click)="showProduct(product.gtin)">
+                            <i class="ph ph-note-pencil icon-text-ul"></i>Ver detalles
+                          </a>
+                          <a *ngIf="product.status == 0" class="dropdown-item enable-item" (click)="enableProduct(product.product_id)">
+                            <i class="ph ph-check-circle icon-text-ul"></i> Activar
+                          </a>
+                          <a *ngIf="product.status == 1" class="dropdown-item disable-item" (click)="disableProduct(product.product_id)">
+                            <i class="ph ph-x-circle icon-text-ul"></i> Desactivar
+                          </a>
+                        </div>
+                      </div>
+                      
+                    </td>
+                  </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-bs-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar producto</h5>
+                    <button type="button" class="modal-close-button" data-bs-dismiss="modal" aria-label="Close">
+                      <span class="modal-close-button-x">&times;</span>
+                    </button>
+                  </div>
+                <div class="modal-body">
+
+                    <!-- form  -->
+
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                        <!-- producto  -->
+
+                        <div class="form-group">
+                            <label for="product">Producto <span class="color-red">*</span> </label>
+                            <input type="text" class="form-control" formControlName="product" id="product"
+                                placeholder="Nombre del producto..."
+                                [ngClass]="{'is-invalid': form.controls['product'].errors && submitted}">
+                            <div *ngIf="form.controls['product'].errors && submitted">
+                                <small class="color-red">Favor de ingresar una producto válido</small>
+                            </div>
+                        </div>
+
+                        <!-- code  -->
+
+                        <div class="form-group">
+                            <label for="gtin">GTIN <span class="color-red">*</span> </label>
+                            <input type="text" class="form-control" formControlName="gtin" id="gtin" placeholder="Código GTIN del producto..." 
+                                [ngClass]="{'is-invalid': form.controls['gtin'].errors && submitted}" >
+                            <div *ngIf="form.controls['gtin'].errors && submitted">
+                                <small class="color-red">Favor de ingresar un GTIN válido</small>
+                            </div>
+                        </div>
+
+                        <!-- button  -->
+
+                        <div class="form-button">
+                            <button type="submit" class="btn btn-primary btn-form">Guardar</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

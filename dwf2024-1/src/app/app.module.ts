@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 import { LayoutModule } from './modules/layout/layout.module';
 import { CategoryModule } from './modules/category/category.module';
+import { ProductModule } from './modules/product/product.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CategoryModule } from './modules/category/category.module';
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    CategoryModule
+    CategoryModule,
+    ProductModule
   ],
   providers: [],
   bootstrap: [AppComponent]
