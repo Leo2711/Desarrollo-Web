@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 
 import { LayoutModule } from './modules/layout/layout.module';
 import { CategoryModule } from './modules/category/category.module';
@@ -19,6 +20,7 @@ import { ProductModule } from './modules/product/product.module';
   ],
   imports: [
     BrowserModule,
+    NgxPhotoEditorModule,
     AppRoutingModule,
     LayoutModule,
     CategoryModule,

@@ -6,10 +6,12 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ProductComponent } from './components/product/product.component';
+import { ProductImageComponent } from './components/product-image/product-image.component';
 
 @NgModule({
   declarations: [
-    ProductComponent
+    ProductComponent,
+    ProductImageComponent
   ],
   imports: [
     CommonModule,
