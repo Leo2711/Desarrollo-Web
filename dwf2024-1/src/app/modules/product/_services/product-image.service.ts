@@ -13,15 +13,15 @@ export class ProductImageService {
 
   constructor(private http: HttpClient) { }
 
-  updateProductImage(product_image: ProductImage) {
-    return this.http.put(this.url + this.route, product_image);
+  createProductImage(product_image: any) {
+    return this.http.post(this.url + this.route, product_image);
   }
-
-  getProductImage(gtin: string) {
-    return this.http.get(this.url + this.route + "/" + gtin);
-  }
-
+  
   deleteProductImage(id: number) {
     return this.http.delete(this.url + this.route + "/" + id);
+  }
+  
+  getProductImages(product_id: number) {
+    return this.http.get<ProductImage[]>(this.url + this.route + "/" + product_id);
   }
 }

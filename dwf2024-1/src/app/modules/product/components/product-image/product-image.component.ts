@@ -158,10 +158,10 @@ export class ProductImageComponent {
 
   updateProductImage(image: string){
     let productImage: ProductImage = new ProductImage();
-    productImage.product_image_id = this.product.image.product_image_id;
+    productImage.product_image_id = this.product.product_image_id;
     productImage.image = image;
 
-    this.productImageService.updateProductImage(productImage).subscribe(
+    this.productImageService.createProductImage(productImage).subscribe(
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
@@ -192,10 +192,10 @@ export class ProductImageComponent {
       }
     );
   }
-
+  
   deleteProductImage(image: string){
     let productImage: ProductImage = new ProductImage();
-    productImage.gtin = this.product.image.product_image_id;
+    productImage.product_image_id = this.product.product_image_id;
     productImage.image = image;
 
     this.productImageService.deleteProductImage(productImage.product_image_id).subscribe(
