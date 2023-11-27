@@ -1,30 +1,24 @@
-/* @author Mónica Miranda Mijangos 
-  @author Eduardo Leónel Sánchez Velasco 
-  Version: 1
-  Fecha: 02/10/2023 */
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryComponent } from './components/category/category.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-
+import { ProductComponent } from './components/product/product.component';
+import { ProductImageComponent } from './components/product-image/product-image.component';
 
 @NgModule({
   declarations: [
-    CategoryComponent
+    ProductComponent,
+    ProductImageComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    HttpClientModule,
-  ],
-  exports: [
-    CategoryComponent,
+    HttpClientModule
   ]
 })
 export class ProductModule { }

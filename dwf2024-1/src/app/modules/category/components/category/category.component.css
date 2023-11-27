@@ -1,0 +1,157 @@
+/* @author Mónica Miranda Mijangos 
+  @author Eduardo Leónel Sánchez Velasco 
+  Version: 2
+  Fecha: 16/10/2023 */
+
+.card {
+    max-width: 1080px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+h1 {
+    color: #78c2ad !important;
+}
+
+table:not(.A) {
+    text-align: center;
+}
+
+.A {
+    text-align: left;
+}
+
+.botonDer {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+}
+
+/* Modal */
+
+.modal-content {
+    padding: 0px 8px;
+}
+
+.modal-header {
+    padding: 8px 16px !important;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-button {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.btn-form {
+    width: 100px;
+}
+
+.modal-close-button {
+    border: none;
+    background-color: white;
+}
+
+.modal-close-button-x {
+    color: #8181A5;
+    font-size: 32px;
+}
+
+/* Color  */
+
+.color-red {
+    color: red;
+}
+
+.btn-new {
+    float: right;
+    width: 200px;
+    font-weight: 450;    
+}
+
+/* Icons  */
+
+.icon-text-button {
+    font-size: 20px;
+    margin-right: 2px;    
+}
+
+/* Status */
+
+.td-status-enable {    
+    width: 100px;
+    margin: auto;
+    background-color: #78c2ad;
+    color: white;
+    border-radius: 18px;
+}
+
+.td-status-disable {    
+    width: 100px;
+    margin: auto;
+    background-color: #f3969a;
+    color: white;
+    border-radius: 18px;
+}
+
+/* Dots */
+
+.icon-text-ul {
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+.icon-menu {
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.icon-menu:hover {
+    color: blue;
+}
+
+/* ul dropdown  */
+
+.dropdown-button {
+    border: none;
+    background-color: white;
+}
+
+.dropdown-button:hover {
+    border: none;
+    background-color: #e8e8e8;
+}
+
+.dropdown-item {
+    color: black !important;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    color: white !important;
+    background-color: #6cc3d5;
+}
+
+.enable-item {
+    color: #78c2ad !important;
+    cursor: pointer;
+}
+
+.enable-item:hover {
+    color: white !important;
+    background-color: #78c2ad;
+}
+
+.disable-item {
+    color: #f3969a !important;
+    cursor: pointer;
+}
+
+.disable-item:hover {
+    color: white !important;
+    background-color: #f3969a;
+}
