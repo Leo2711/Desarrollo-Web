@@ -8,11 +8,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 
+import { CustomerModule } from './modules/customer/customer.module'
 import { LayoutModule } from './modules/layout/layout.module';
-import { CategoryModule } from './modules/category/category.module';
+import { ConsumeApiModule } from './modules/consume-api/consume-api.module';
 import { ProductModule } from './modules/product/product.module';
+import { InvoiceModule } from './modules/invoice/invoice.module';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import { ProductModule } from './modules/product/product.module';
   ],
   imports: [
     BrowserModule,
-    NgxPhotoEditorModule,
     AppRoutingModule,
-    LayoutModule,
-    CategoryModule,
-    ProductModule
+    CustomerModule,
+    LayoutModule, 
+    ConsumeApiModule, 
+    ProductModule,
+    InvoiceModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
