@@ -1,20 +1,18 @@
-/* @author Mónica Miranda Mijangos 
-  @author Eduardo Leónel Sánchez Velasco 
-  Version: 4
-  Fecha: 04/11/2023 */
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoryComponent } from './modules/category/components/category/category.component';
+import { RegionComponent } from './modules/customer/components/region/region.component';
+import { DatosUnamComponent } from './modules/consume-api/datos-unam/datos-unam.component';
+import { CustomerComponent } from './modules/customer/components/customer/customer.component';
+import { CustomerImageComponent } from './modules/customer/components/customer-image/customer-image.component';
 import { ProductComponent } from './modules/product/components/product/product.component';
-import { ProductImageComponent } from './modules/product/components/product-image/product-image.component';
 
 const routes: Routes = [
-  // { path: '', component: CategoryComponent },
-  { path: "category", component: CategoryComponent },
+  { path: "region", component: RegionComponent },
+  { path: "consume-api", component: DatosUnamComponent },
+  { path: "customer", component: CustomerComponent },
+  { path: "customer/:rfc", component: CustomerImageComponent },
   { path: "product", component: ProductComponent },
-  { path: "product/:gtin", component: ProductImageComponent }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

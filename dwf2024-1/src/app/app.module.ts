@@ -15,6 +15,7 @@ import { ConsumeApiModule } from './modules/consume-api/consume-api.module';
 import { ProductModule } from './modules/product/product.module';
 import { InvoiceModule } from './modules/invoice/invoice.module';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -23,12 +24,12 @@ import { InvoiceModule } from './modules/invoice/invoice.module';
     BrowserModule,
     AppRoutingModule,
     CustomerModule,
-    LayoutModule, 
-    ConsumeApiModule, 
+    LayoutModule,
+    ConsumeApiModule,
     ProductModule,
     InvoiceModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { }  
