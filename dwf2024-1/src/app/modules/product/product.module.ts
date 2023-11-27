@@ -11,7 +11,7 @@ import { ProductImageComponent } from './components/product-image/product-image.
 @NgModule({
   declarations: [
     ProductComponent,
-    ProductImageComponent
+    ProductImageComponent    
   ],
   imports: [
     CommonModule,

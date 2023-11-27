@@ -14,6 +14,7 @@ import { LayoutModule } from './modules/layout/layout.module';
 import { ConsumeApiModule } from './modules/consume-api/consume-api.module';
 import { ProductModule } from './modules/product/product.module';
 import { InvoiceModule } from './modules/invoice/invoice.module';
+import { CategoryModule } from './modules/category/category.module';
 
 
 @NgModule({
@@ -26,8 +27,9 @@ import { InvoiceModule } from './modules/invoice/invoice.module';
     CustomerModule,
     LayoutModule,
     ConsumeApiModule,
-    ProductModule,
+    ProductModule,    
     InvoiceModule,
+    CategoryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

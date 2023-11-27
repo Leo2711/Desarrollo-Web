@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Product } from '../../_models/product';
+import { DtoProductList } from '../../_dtos/dto-product-list';
 import { Category } from '../../../category/_models/category';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../../_services/product.service';
 import { CategoryService } from '../../../category/_services/category.service';
 
-import Swal from 'sweetalert2'; // sweetalert
+import Swal from'sweetalert2'; // sweetalert
 import { Router } from '@angular/router';
 
 declare var $: any; // jquery
@@ -15,10 +15,8 @@ declare var $: any; // jquery
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-
 export class ProductComponent {
-
-  products: Product[] = []; // lista de clientes
+  products: DtoProductList[] = []; // lista de clientes
   categories: Category[] = []; // lista de regiones
 
   // formulario de registro
@@ -38,64 +36,78 @@ export class ProductComponent {
     private formBuilder: FormBuilder, // formulario
     private productService: ProductService, // servicio product de API
     private router: Router, // redirigir a otro componente
-  ) { }
+  ){}
 
   // primera función que se ejecuta
-  ngOnInit() {
+  ngOnInit(){
     this.getProducts();
   }
 
   // CRUD product
 
-  disableProduct(id: number) {
+  disableProduct(id: number){
     this.productService.disableProduct(id).subscribe(
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
+          position: 'top-end',
           icon: 'success',
-          title: 'Categoría deshabilitada!',
+          toast: true,
+          text: 'El producto ha sido desactivado',
+          background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 2000
+        });
 
         this.getProducts(); // consulta productos con los cambios realizados
       },
       err => {
         // muestra mensaje de error
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo deshabilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
 
-  enableProduct(id: number) {
+  enableProduct(id: number){
     this.productService.enableProduct(id).subscribe(
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
+          position: 'top-end',
           icon: 'success',
-          title: 'Categoría habilitada!',
+          toast: true,
+          text: 'El producto ha sido activado',
+          background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 2000
+        });
 
         this.getProducts(); // consulta productos con los cambios realizados
       },
       err => {
         // muestra mensaje de error
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
 
-  getProducts() {
+  getProducts(){
     this.productService.getProducts().subscribe(
       res => {
         this.products = res; // asigna la respuesta de la API a la lista de productos
@@ -103,52 +115,63 @@ export class ProductComponent {
       err => {
         // muestra mensaje de error
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: 'Algo salió mal al obtener los datos.'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
 
-  onSubmit() {
+  onSubmit(){
     // valida el formulario
     this.submitted = true;
-    if (this.form.invalid) return;
+    if(this.form.invalid) return;
     this.submitted = false;
 
     this.productService.createProduct(this.form.value).subscribe(
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
+          position: 'top-end',
           icon: 'success',
-          title: 'Nuevo producto creado',
+          toast: true,
+          text: 'El producto ha sido registrado',
+          background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 2000
+        });
 
         this.getProducts(); // consulta productos con los cambios realizados
-
+    
         $("#modalForm").modal("hide"); // oculta el modal de registro
       },
       err => {
         // muestra mensaje de error
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal al crear los datos!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
 
-  showProduct(gtin: string) {
+  showProduct(gtin: string){
     this.router.navigate(['product/' + gtin]);
   }
 
   // catalogues
 
-  getCategories() {
+  getCategories(){
     this.categoryService.getCategories().subscribe(
       res => {
         this.categories = res; // asigna la respuesta de la API a la lista de categories
@@ -156,17 +179,21 @@ export class ProductComponent {
       err => {
         // muestra mensaje de error
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: 'Algo salió mal al obtener los datos.'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
 
   // modals 
 
-  showModalForm() {
+  showModalForm(){
     this.form.reset();
     this.submitted = false;
     this.getCategories();

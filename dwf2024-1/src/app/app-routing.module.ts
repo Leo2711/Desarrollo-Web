@@ -5,13 +5,17 @@ import { DatosUnamComponent } from './modules/consume-api/datos-unam/datos-unam.
 import { CustomerComponent } from './modules/customer/components/customer/customer.component';
 import { CustomerImageComponent } from './modules/customer/components/customer-image/customer-image.component';
 import { ProductComponent } from './modules/product/components/product/product.component';
+import { CategoryComponent } from './modules/category/components/category/category.component';
+import { ProductImageComponent } from './modules/product/components/product-image/product-image.component';
 
 const routes: Routes = [
+  { path: "category", component: CategoryComponent},
   { path: "region", component: RegionComponent },
   { path: "consume-api", component: DatosUnamComponent },
   { path: "customer", component: CustomerComponent },
   { path: "customer/:rfc", component: CustomerImageComponent },
   { path: "product", component: ProductComponent },
+  { path: "product/:gtin", component: ProductImageComponent },
 ]
 
 @NgModule({

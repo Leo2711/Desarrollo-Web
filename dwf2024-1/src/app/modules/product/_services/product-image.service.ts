@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductImage } from '../_models/product-image';
-// import { ProductImage } from '../_dtos/dto-producct_image-list';
 
 @Injectable({
   providedIn: 'root'
