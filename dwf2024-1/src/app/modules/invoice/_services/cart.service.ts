@@ -15,13 +15,17 @@ export class CartService {
     return this.http.post(this.url + this.route, cart);
   }
 
-  deleteCart(id: number) {
-    return this.http.delete(this.url + this.route + "/" + id);
+  deleteCart(rfc: string) {
+    return this.http.delete(this.url + this.route + "/clear/" + rfc);
   }
 
   /* REQUERIMIENTO 4. Implementar servicio Cart - función getCart() */
-  getCart() {}
+  getCart(rfc: string) {
+    return this.http.get(this.url + this.route + "/" + rfc);
+  }
 
   /* REQUERIMIENTO 4. Implementar servicio Cart - función removeFromCart() */
-  removeFromCart() {}
+  removeFromCart(id: number) {
+    return this.http.delete(this.url + this.route + "/" + id);
+  }
 }
