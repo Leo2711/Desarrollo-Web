@@ -47,7 +47,7 @@ export class CategoryComponent {
           timer: 1500
         })
         */
-        this.categories = res; // lista de categorías de la API
+        this.categories = res.sort((a,b) => a.category_id - b.category_id); // lista de categorías de la API
       },
       err => {
         Swal.fire({
