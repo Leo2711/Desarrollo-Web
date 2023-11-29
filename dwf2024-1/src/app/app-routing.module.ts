@@ -8,6 +8,7 @@ import { ProductComponent } from './modules/product/components/product/product.c
 import { CategoryComponent } from './modules/category/components/category/category.component';
 import { ProductImageComponent } from './modules/product/components/product-image/product-image.component';
 import { InvoiceComponent } from './modules/invoice/components/invoice/invoice.component';
+import { CartComponent } from './modules/invoice/components/cart/cart.component';
 
 const routes: Routes = [
   { path: "category", component: CategoryComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: "customer/:rfc", component: CustomerImageComponent },
   { path: "product", component: ProductComponent },
   { path: "product/:gtin", component: ProductImageComponent },
+  { path: "cart/:rfc", component: CartComponent },
   { path: "invoice", component: InvoiceComponent },
 ]
 
