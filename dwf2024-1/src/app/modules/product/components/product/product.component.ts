@@ -7,6 +7,7 @@ import { CategoryService } from '../../../category/_services/category.service';
 
 import Swal from'sweetalert2'; // sweetalert
 import { Router } from '@angular/router';
+import { CategoryModule } from 'src/app/modules/category/category.module';
 
 declare var $: any; // jquery
 
@@ -16,8 +17,8 @@ declare var $: any; // jquery
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
-  products: DtoProductList[] = []; // lista de clientes
-  categories: Category[] = []; // lista de regiones
+  products: DtoProductList[] = []; // lista de productos
+  categories: Category[] = []; // lista de categorías
 
   // formulario de registro
   form = this.formBuilder.group({
@@ -41,6 +42,11 @@ export class ProductComponent {
   // primera función que se ejecuta
   ngOnInit(){
     this.getProducts();
+    this.getCategories();
+  }
+
+  getCategory(id: number) {
+    return this.categories.find(element => element.category_id == id)?.category;
   }
 
   // CRUD product
