@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../../_services/product.service';
 import { CategoryService } from '../../../category/_services/category.service';
 
-import Swal from'sweetalert2'; // sweetalert
+import Swal from 'sweetalert2'; // sweetalert
 import { Router } from '@angular/router';
 import { CategoryModule } from 'src/app/modules/category/category.module';
 
@@ -37,10 +37,10 @@ export class ProductComponent {
     private formBuilder: FormBuilder, // formulario
     private productService: ProductService, // servicio product de API
     private router: Router, // redirigir a otro componente
-  ){}
+  ) { }
 
   // primera función que se ejecuta
-  ngOnInit(){
+  ngOnInit() {
     this.getProducts();
     this.getCategories();
   }
@@ -51,69 +51,93 @@ export class ProductComponent {
 
   // CRUD product
 
-  disableProduct(id: number){
-    this.productService.disableProduct(id).subscribe(
-      res => {
-        // muestra mensaje de confirmación
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          toast: true,
-          text: 'El producto ha sido desactivado',
-          background: '#E8F8F8',
-          showConfirmButton: false,
-          timer: 2000
-        });
+  disableProduct(id: number) {
+    Swal.fire({
+      title: "Desea desactivar este producto?",
+      text: "Está acción desactivará el producto seleccionado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Desactivar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productService.disableProduct(id).subscribe(
+          res => {
+            // muestra mensaje de confirmación
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              toast: true,
+              text: 'El producto ha sido desactivado',
+              background: '#E8F8F8',
+              showConfirmButton: false,
+              timer: 2000
+            });
 
-        this.getProducts(); // consulta productos con los cambios realizados
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+            this.getProducts(); // consulta productos con los cambios realizados
+          },
+          err => {
+            // muestra mensaje de error
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              toast: true,
+              showConfirmButton: false,
+              text: err.error.message,
+              background: '#F8E8F8',
+              timer: 2000
+            });
+          }
+        );
       }
-    );
+    });
   }
 
-  enableProduct(id: number){
-    this.productService.enableProduct(id).subscribe(
-      res => {
-        // muestra mensaje de confirmación
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          toast: true,
-          text: 'El producto ha sido activado',
-          background: '#E8F8F8',
-          showConfirmButton: false,
-          timer: 2000
-        });
+  enableProduct(id: number) {
+    Swal.fire({
+      title: "Desea activar este producto?",
+      text: "Está acción activará el producto seleccionado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Activar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productService.enableProduct(id).subscribe(
+          res => {
+            // muestra mensaje de confirmación
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              toast: true,
+              text: 'El producto ha sido activado',
+              background: '#E8F8F8',
+              showConfirmButton: false,
+              timer: 2000
+            });
 
-        this.getProducts(); // consulta productos con los cambios realizados
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+            this.getProducts(); // consulta productos con los cambios realizados
+          },
+          err => {
+            // muestra mensaje de error
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              toast: true,
+              showConfirmButton: false,
+              text: err.error.message,
+              background: '#F8E8F8',
+              timer: 2000
+            });
+          }
+        );
       }
-    );
+    });
   }
 
-  getProducts(){
+  getProducts() {
     this.productService.getProducts().subscribe(
       res => {
         this.products = res; // asigna la respuesta de la API a la lista de productos
@@ -133,10 +157,10 @@ export class ProductComponent {
     );
   }
 
-  onSubmit(){
+  onSubmit() {
     // valida el formulario
     this.submitted = true;
-    if(this.form.invalid) return;
+    if (this.form.invalid) return;
     this.submitted = false;
 
     this.productService.createProduct(this.form.value).subscribe(
@@ -153,7 +177,7 @@ export class ProductComponent {
         });
 
         this.getProducts(); // consulta productos con los cambios realizados
-    
+
         $("#modalForm").modal("hide"); // oculta el modal de registro
       },
       err => {
@@ -171,13 +195,13 @@ export class ProductComponent {
     );
   }
 
-  showProduct(gtin: string){
+  showProduct(gtin: string) {
     this.router.navigate(['product/' + gtin]);
   }
 
   // catalogues
 
-  getCategories(){
+  getCategories() {
     this.categoryService.getCategories().subscribe(
       res => {
         this.categories = res; // asigna la respuesta de la API a la lista de categories
@@ -199,10 +223,14 @@ export class ProductComponent {
 
   // modals 
 
-  showModalForm(){
+  showModalForm() {
     this.form.reset();
     this.submitted = false;
     this.getCategories();
     $("#modalForm").modal("show");
+  }
+
+  addCart(_t13: DtoProductList) {
+    throw new Error('Method not implemented.');
   }
 }

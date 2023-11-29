@@ -71,7 +71,7 @@
                                 <!-- price -->
                                 <tr>
                                     <th class="col-md-4">Precio</th>
-                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.price | currency: 'MXN' }}</td>
                                 </tr>
 
                                 <!-- stock -->
@@ -80,10 +80,10 @@
                                     <td>{{ product.stock }}</td>
                                 </tr>
 
-                                <!-- category_id -->
+                                <!-- category -->
                                 <tr>
                                     <th class="col-md-4">Categoría</th>
-                                    <td>{{ category.category_id }}</td>
+                                    <td>{{ category.category }}</td>
                                 </tr>
                             </tbody>
                         </table>
