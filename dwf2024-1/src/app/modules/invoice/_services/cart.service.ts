@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,14 @@ export class CartService {
   private url = "http://localhost:8080";
   private route = "/cart";
 
+  private countSource = new BehaviorSubject<number>(0);
+  currentCount = this.countSource.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  updateCount(count: number) {
+    this.countSource.next(count);
+  }
 
   addToCart(cart: any) {
     return this.http.post(this.url + this.route, cart);

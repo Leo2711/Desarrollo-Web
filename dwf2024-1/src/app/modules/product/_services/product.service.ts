@@ -45,6 +45,6 @@ export class ProductService {
   }
 
   updateProductStock(gtin: string, stock: number) {
-    return this.http.put(this.url + this.route + "/gtin/" + gtin + "/stock/" + stock, null);
+    return this.http.put(this.url + this.route + "/" + gtin + "/stock/" + stock, null);
   }
 }

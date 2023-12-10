@@ -8,6 +8,8 @@ import { CategoryService } from '../../../category/_services/category.service';
 import Swal from 'sweetalert2'; // sweetalert
 import { Router } from '@angular/router';
 import { CategoryModule } from 'src/app/modules/category/category.module';
+import { Cart } from 'src/app/modules/invoice/_models/cart';
+import { CartService } from 'src/app/modules/invoice/_services/cart.service';
 
 declare var $: any; // jquery
 
@@ -19,6 +21,8 @@ declare var $: any; // jquery
 export class ProductComponent {
   products: DtoProductList[] = []; // lista de productos
   categories: Category[] = []; // lista de categorías
+  cart: any | Cart[] = [];
+  rfc: any | string = "";
 
   // formulario de registro
   form = this.formBuilder.group({
@@ -33,6 +37,7 @@ export class ProductComponent {
   submitted = false; // indica si se envió el formulario
 
   constructor(
+    private cartService: CartService, // servicio cart de API
     private categoryService: CategoryService, // servicio category de API
     private formBuilder: FormBuilder, // formulario
     private productService: ProductService, // servicio product de API
@@ -43,6 +48,7 @@ export class ProductComponent {
   ngOnInit() {
     this.getProducts();
     this.getCategories();
+    this.rfc = localStorage.getItem('user_rfc');
   }
 
   getCategory(id: number) {
@@ -230,7 +236,52 @@ export class ProductComponent {
     $("#modalForm").modal("show");
   }
 
-  addCart(_t13: DtoProductList) {
-    throw new Error('Method not implemented.');
+  addToCart(product: any, quantity: number = 1) {
+    let newCart: Cart = new Cart();
+    newCart.cart_id = product.id;
+    newCart.gtin = product.gtin;
+    newCart.quantity = quantity;
+    newCart.rfc = this.rfc;
+    newCart.status = product.status;
+    this.cartService.addToCart(newCart).subscribe(
+      (res: any) => {
+        this.cart = res;
+        console.log("cantidad actualizada");
+        this.updateStock(product, -quantity);
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  updateStock(product: any, quantity:any) {
+    this.productService.updateProductStock(product.gtin, quantity).subscribe(
+      (res: any) => {
+        console.log("stock actualizado");
+      },
+      err => {
+        console.log("stock NO actualizado");
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#FFEFFF',
+          timer: 2000
+        });
+      }
+    );
   }
 }
