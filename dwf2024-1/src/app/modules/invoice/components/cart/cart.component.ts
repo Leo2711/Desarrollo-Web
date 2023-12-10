@@ -3,6 +3,7 @@ import { Cart } from '../../_models/cart';
 import { CartService } from '../../_services/cart.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InvoiceService } from '../../_services/invoice.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,8 @@ export class CartComponent {
   constructor(
     private route: ActivatedRoute, // recupera parámetros de la url
     private router: Router, // redirigir a otro componente
-    private cartService: CartService // servicio cart de API
+    private cartService: CartService, // servicio cart de API
+    private invoiceService: InvoiceService
   ) { }
 
   ngOnInit() {
@@ -103,4 +105,25 @@ export class CartComponent {
       }
     );
   }
+
+  generateInvoice() {
+    this.invoiceService.generateInvoice(this.rfc).subscribe(
+      res => {
+        console.log("bien");
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
 }

@@ -10,7 +10,7 @@ import { CartComponent } from './components/cart/cart.component';
 @NgModule({
   declarations: [
     InvoiceComponent,
-    CartComponent
+    CartComponent,    
   ],
   imports: [
     CommonModule,
