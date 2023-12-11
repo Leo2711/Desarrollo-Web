@@ -1,13 +1,14 @@
 /* @author Mónica Miranda Mijangos 
   @author Eduardo Leónel Sánchez Velasco 
-  Version: 3
-  Fecha: 25/10/2023 */
+  Version: 4
+  Fecha: 11/12/2023 */
 
 import { Component } from '@angular/core';
 import { Category } from '../../_models/category';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from "../../_services/category.service";
 import Swal from 'sweetalert2'
+import { filter } from 'rxjs';
 declare var $: any;
 
 @Component({
@@ -18,7 +19,12 @@ declare var $: any;
 export class CategoryComponent {
 
   categories: Category[] = [];
-  categoryUpdated: number = 0;  
+  activeCategories: Category[] = [];
+  categoryUpdated: number = 0;
+
+  sortStatus = true;
+  currentPage = 1;
+  itemsPerPage = 10;
 
   form = this.formBuilder.group({
     category: ["", [Validators.required]],
@@ -30,24 +36,44 @@ export class CategoryComponent {
   constructor(
     private formBuilder: FormBuilder,
     private categoryService: CategoryService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getCategories();
   }
 
+  // Función para cambiar la página
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+  }
+
+  // modal
+
+  showModalForm() {
+    this.categoryUpdated = 0;
+    this.form.reset();
+    this.submitted = false;
+    $("#modalForm").modal("show");
+  }
+
+  onSubmit() {
+    // validación
+    this.submitted = true;
+    if (this.form.invalid) return;
+    this.submitted = false;
+
+    if (this.categoryUpdated == 0) {
+      this.onSubmitCreate();
+    } else {
+      this.onSubmitUpdate();
+    }
+  }
+
   getCategories() {
+    this.sortStatus = true;
     this.categoryService.getCategories().subscribe(
       res => {
-        /** 
-        Swal.fire({
-          icon: 'success',
-          title: 'Categories Obtained',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        */
-        this.categories = res.sort((a,b) => a.category_id - b.category_id); // lista de categorías de la API
+        this.categories = res.sort((a, b) => a.category_id - b.category_id); // lista de categorías de la API
       },
       err => {
         Swal.fire({
@@ -59,19 +85,6 @@ export class CategoryComponent {
     );
   }
 
-  onSubmit() {
-    // validación
-    this.submitted = true;
-    if (this.form.invalid) return;
-    this.submitted = false;
-    
-    if(this.categoryUpdated == 0){
-      this.onSubmitCreate();
-    }else{
-      this.onSubmitUpdate();
-    }
-  }
-
   onSubmitCreate() {
     this.categoryService.createCategory(this.form.value).subscribe(
       res => {
@@ -81,7 +94,7 @@ export class CategoryComponent {
           showConfirmButton: false,
           timer: 1500
         })
-      
+
         this.getCategories();
 
         $("#modalForm").modal("hide");
@@ -122,40 +135,15 @@ export class CategoryComponent {
     );
   }
 
-  // CRUD
-
-  disableCategory(id: number) {
-    this.categoryService.disableCategory(id).subscribe (
+  getCategory(id: string) {
+    if (!id) { return; }
+    let id_category = Number(id);
+    this.categoryService.getCategory(id_category).subscribe(
       res => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Categoría deshabilitada!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        this.getCategories();
-      }, 
-      err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo deshabilitar el elemento!'
-        })
-      }
-    );
-  }
-
-  enableCategory(id: number) {
-    this.categoryService.enableCategory(id).subscribe (
-      res => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Categoría habilitada!',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        this.getCategories();
-      }, 
+        console.log(res);
+        console.log(this.categories.filter(el => el.category_id == id_category));
+        this.categories = [res];        
+      },
       err => {
         Swal.fire({
           icon: 'error',
@@ -168,22 +156,92 @@ export class CategoryComponent {
 
   updateCategory(Category: Category) {
     this.categoryUpdated = Category.category_id;
-    
+
     this.form.reset();
     this.form.controls['category'].setValue(Category.category);
     this.form.controls['code'].setValue(Category.code);
-    
+
     this.submitted = false;
     $("#modalForm").modal("show");
   }
 
-  // modals 
-
-  showModalForm(){
-    this.categoryUpdated = 0;
-    this.form.reset();
-    this.submitted = false;
-    $("#modalForm").modal("show");
+  disableCategory(id: number) {
+    this.categoryService.deleteCategory(id).subscribe(
+      res => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Categoría deshabilitada!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getCategories();
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Algo salió mal, no se pudo deshabilitar el elemento!'
+        })
+      }
+    );
   }
-  
+
+  enableCategory(id: number) {
+    this.categoryService.activateCategory(id).subscribe(
+      res => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Categoría habilitada!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getCategories();
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
+        })
+      }
+    );
+  }
+
+  getActiveCategories() {
+    this.sortStatus = false;
+    this.categoryService.getActiveCategories().subscribe(
+      res => {
+        this.categories = res;
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
+        })
+      }
+    );
+  }
+
+  getInactiveCategories() {
+    this.sortStatus = false;
+    this.categoryService.getCategories().subscribe(
+      res => {        
+        this.categories = res.sort((a, b) => a.category_id - b.category_id); // lista de categorías de la API
+        this.categories = this.categories.filter(el => el.status == 0);
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Algo salió mal al obtener los datos.'
+        })
+      }
+    );
+  }
+
+  cleanSearch(inputField: HTMLInputElement) {
+    inputField.value = '';
+    this.getCategories();
+  }
 }
