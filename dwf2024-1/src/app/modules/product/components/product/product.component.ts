@@ -349,6 +349,18 @@ export class ProductComponent {
   }
 
   addToCart(product: any, quantity: number = 1) {
+    if (product.status == 0) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        toast: true,
+        showConfirmButton: false,
+        text: "Producto desactivado",
+        background: '#F8E8F8',
+        timer: 2000
+      });
+      return;
+    }
     let newCart: Cart = new Cart();
     newCart.cart_id = product.id;
     newCart.gtin = product.gtin;

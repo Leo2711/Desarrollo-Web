@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Invoice } from '../_models/invoice';
+import { DtoInvoiceList } from '../_dtos/dto-invoice-list';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class InvoiceService {
 
   /* REQUERIMIENTO 4. Implementar servicio Invoice - función getInvoices() */
   getInvoices(rfc: string) {
-    return this.http.get<Invoice>(this.url + this.route + "/" + rfc);
+    return this.http.get<DtoInvoiceList[]>(this.url + this.route + "/" + rfc);
   }
 
   /* REQUERIMIENTO 4. Implementar servicio Invoice - función generateInvoice() */
