@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { Customer } from 'src/app/modules/customer/_models/customer';
 import { CartService } from '../../_services/cart.service';
 import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
+import { Item } from '../../_models/item';
+import { DtoProductList } from 'src/app/modules/product/_dtos/dto-product-list';
 
 @Component({
   selector: 'app-invoice',
@@ -19,10 +21,11 @@ export class InvoiceComponent {
   rfc: any | string = "";
   id: any | number = 0;
 
-  invoice : any | Invoice;
-  customer : any | Customer;
-  product: any | Product;
-  products: any | Product[] = [];
+  invoice: Invoice = new Invoice();
+  items: Item[] = [];
+  customer: Customer = new Customer();
+  product: DtoProductList = new DtoProductList();
+  products: DtoProductList[] = [];
 
   constructor(
     private route: ActivatedRoute, // recupera parámetros de la url
@@ -37,21 +40,26 @@ export class InvoiceComponent {
     this.rfc = localStorage.getItem('user_rfc');
     this.id = this.route.snapshot.paramMap.get('id');
     this.getInvoice();
-    this.getCustomer();   
 
     this.cartService.getCount().subscribe(count => {
       this.layoutService.updateLayout(count);
     });
   }
 
-  redirect(url: string[]){
+  redirect(url: string[]) {
     this.router.navigate(url);
   }
 
   getInvoice() {
     this.invoiceService.getInvoice(this.id).subscribe(
-      res => {
+      (res: Invoice) => {
         this.invoice = res;
+        this.customer = res.customer;
+        this.items = res.items;
+        this.items.forEach(element => {
+          this.getProduct(element.gtin);
+        });
+        console.log("Items:", this.items);
       },
       err => {
         // muestra mensaje de error
@@ -68,30 +76,10 @@ export class InvoiceComponent {
     );
   }
 
-  getCustomer() {
-    this.invoiceService.getInvoice(this.id).subscribe(
-      res => {
-        this.customer = res.customer;
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: "No se encontró el usuario",
-          background: '#F8E8F8',
-          timer: 3000
-        });
-      }
-    );
-  }
-
   getProduct(gtin: any) {
     this.productService.getProduct(gtin).subscribe(
-      res => {
-        this.product = res;
+      (res: DtoProductList) => {
+        this.products.push(res);
       }
     );
   }

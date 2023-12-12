@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DtoCustomerList } from '../_dtos/dto-customer-list';
+import { Customer } from '../_models/customer';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,6 @@ export class CustomerService {
   }
 
   getCustomer(rfc: string) {
-    return this.http.get<DtoCustomerList>(this.url + this.route + "/" + rfc);
+    return this.http.get<Customer>(this.url + this.route + "/" + rfc);
   }
 }

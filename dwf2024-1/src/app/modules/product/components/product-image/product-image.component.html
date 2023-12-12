@@ -51,6 +51,13 @@
                         <h1>
                             {{ product.product }}
                         </h1>
+                        <!-- BOTON AGREGAR -->
+                        <div *ngIf="product.status" class="botonDer">
+                            <button type="button" class="btn btn-primary btn-new" (click)="addToCart(product)">
+                                <i class="ph ph-shopping-cart i-cart icon-text-button"></i>
+                                <p class="new-cat"> Añadir </p>
+                            </button>
+                        </div>
 
                         <table class="table">
                             <tbody>

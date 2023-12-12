@@ -49,6 +49,7 @@ h1 {
     color: #78c2ad !important;
     padding-bottom: 5px;
     margin-bottom: 20px;
+    max-width: 85%;
 }
 
 /* Boton Agregar */
@@ -61,7 +62,7 @@ h1 {
 
 .btn-new {
     float: right;
-    width: 180px;
+    width: 120px;
     font-weight: 500;
 }
 
@@ -70,7 +71,7 @@ h1 {
 .icon-text-button {
     font-size: 25px;
     display: table-cell;
-    padding-left: 2px;
+    padding-left: 4px;
 }
 
 .new-cat {
