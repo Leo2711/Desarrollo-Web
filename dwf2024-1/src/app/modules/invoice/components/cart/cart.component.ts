@@ -170,8 +170,14 @@ export class CartComponent {
 
   generateInvoice() {
     this.invoiceService.generateInvoice(this.rfc).subscribe(
-      res => {
-        console.log("bien");
+      res => {        
+        Swal.fire({
+          title: 'Factura generada',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.getCart();
       },
       err => {
         // muestra mensaje de error
