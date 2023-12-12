@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { DtoInvoiceList } from '../../_dtos/dto-invoice-list';
 import { Invoice } from '../../_models/invoice';
+import { Product } from 'src/app/modules/product/_models/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../../_services/invoice.service';
-import Swal from 'sweetalert2';
 import { ProductService } from 'src/app/modules/product/_services/product.service';
-import { Product } from 'src/app/modules/product/_models/product';
-import { Item } from '../../_models/item';
+import Swal from 'sweetalert2';
+import { Customer } from 'src/app/modules/customer/_models/customer';
 
 @Component({
   selector: 'app-invoice',
@@ -16,8 +15,10 @@ import { Item } from '../../_models/item';
 export class InvoiceComponent {
 
   rfc: any | string = "";
-  
-  invoice: any | Invoice;
+  id: any | number = 0;
+
+  invoice : any | Invoice;
+  customer : any | Customer;
   product: any | Product;
   products: any | Product[] = [];
 
@@ -30,14 +31,39 @@ export class InvoiceComponent {
 
   ngOnInit() {
     this.rfc = localStorage.getItem('user_rfc');
+    this.id = this.route.snapshot.paramMap.get('id');
     this.getInvoice();
-    console.log(this.invoice);    
+    this.getCustomer();   
+  }
+
+  redirect(url: string[]){
+    this.router.navigate(url);
   }
 
   getInvoice() {
-    this.invoiceService.getInvoice(1).subscribe(
+    this.invoiceService.getInvoice(this.id).subscribe(
       res => {
         this.invoice = res;
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  getCustomer() {
+    this.invoiceService.getInvoice(this.id).subscribe(
+      res => {
+        this.customer = res.customer;
       },
       err => {
         // muestra mensaje de error
@@ -61,4 +87,5 @@ export class InvoiceComponent {
       }
     );
   }
+
 }

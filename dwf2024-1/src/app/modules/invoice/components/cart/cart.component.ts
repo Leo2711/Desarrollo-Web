@@ -18,6 +18,7 @@ export class CartComponent {
   rfc: any | string = "";
   subtotal: any | number = 0;
   total: number = 0;
+  empty : boolean = true;
 
   constructor(
     private route: ActivatedRoute, // recupera parámetros de la url
@@ -33,6 +34,7 @@ export class CartComponent {
       this.getCart();
       this.getTotal();
     }
+    this.empty = !(this.cart.lenght > 0);    
   }
 
   // addToCart -> product

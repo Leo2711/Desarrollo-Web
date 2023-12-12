@@ -6,11 +6,13 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { CartComponent } from './components/cart/cart.component';
+import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
 
 @NgModule({
   declarations: [
     InvoiceComponent,
-    CartComponent,    
+    CartComponent,
+    InvoiceListComponent,    
   ],
   imports: [
     CommonModule,

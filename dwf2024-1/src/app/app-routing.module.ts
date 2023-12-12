@@ -9,6 +9,7 @@ import { CategoryComponent } from './modules/category/components/category/catego
 import { ProductImageComponent } from './modules/product/components/product-image/product-image.component';
 import { InvoiceComponent } from './modules/invoice/components/invoice/invoice.component';
 import { CartComponent } from './modules/invoice/components/cart/cart.component';
+import { InvoiceListComponent } from './modules/invoice/components/invoice-list/invoice-list.component';
 
 const routes: Routes = [
   { path: "", component: ProductComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: "product", component: ProductComponent },
   { path: "product/:gtin", component: ProductImageComponent },
   { path: "cart/:rfc", component: CartComponent },
-  { path: "invoice", component: InvoiceComponent },
+  { path: "invoice", component: InvoiceListComponent },
+  { path: "invoice/:id", component: InvoiceComponent },
 ]
 
 @NgModule({

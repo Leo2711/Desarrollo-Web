@@ -1,45 +1,13 @@
-/*  @author Mónica Miranda Mijangos 
-    @author Eduardo Leónel Sánchez Velasco 
-    Version: 2
-    Fecha: 11/12/2023 */
-
-.btn-return {
-    color: blue;
-    margin-bottom: 16px;
+.card {
+    max-width: 1280px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.icon-text-button {
-    font-size: 25px;
-    display: table-cell;
-    padding-left: 2px;
-}
-
-.btn-p {
-    position: absolute;
-    right: 20px;
-}
-
-.botonDer {
-    position: absolute;
-    right: 2%;
-}
-
-.btn-new {
-    float: right;
-    width: 100px;
-    height: 36px;
-    font-weight: 500;
-}
-
-.item-txt {
-    display: table-cell;
-    padding-left: 10px;
-    vertical-align: middle;
-    font-size: 18px;
-}
-
-.cursor-pointer {
-    cursor: pointer;
+h1 {
+    color: #78c2ad !important;
+    padding-bottom: 5px;
 }
 
 .container {
@@ -59,14 +27,15 @@
 .invoice-header {
     margin: 0 -20px;
     background: #f0f3f4;
-    padding: 20px
+    padding: 20px;
+    margin-bottom: 15px;
 }
 
 .invoice-date,
 .invoice-from,
 .invoice-to {
     display: table-cell;
-    width: 1%
+    width: 100%;
 }
 
 .invoice-from,
@@ -82,7 +51,7 @@
 }
 
 .invoice-date {
-    text-align: right;
+    text-align: left;
     padding-left: 20px
 }
 

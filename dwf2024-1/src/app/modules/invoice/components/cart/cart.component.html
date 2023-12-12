@@ -13,7 +13,7 @@
                         </div>
 
                         <!-- Comprar -->
-                        <div class="botonDer">
+                        <div *ngIf="!empty" class="botonDer">
                             <button type="button" class="btn btn-primary btn-new" (click)="generateInvoice()">
                                 <span>Finalizar Compra {{total | currency: 'MXN'}} <i
                                         class="fas fa-long-arrow-alt-right ms-2"></i></span>
@@ -27,7 +27,7 @@
                                 <p class="mb-0">Tienes {{ count }} elementos en tu carrito</p>
                             </div>
                             <div>
-                                <a (click)="deleteCart()" class="text-body">Vaciar carrito </a>
+                                <a *ngIf="!empty" (click)="deleteCart()" class="text-body">Vaciar carrito </a>
                             </div>
                         </div>
 
