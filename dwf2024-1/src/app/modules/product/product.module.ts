@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductComponent } from './components/product/product.component';
 import { ProductImageComponent } from './components/product-image/product-image.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ProductImageComponent } from './components/product-image/product-image.
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     NgxPaginationModule,
     ReactiveFormsModule,
     RouterModule,

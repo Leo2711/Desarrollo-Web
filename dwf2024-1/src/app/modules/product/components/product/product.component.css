@@ -6,7 +6,7 @@
 /* Contenedor */    
 
 .card {
-    max-width: 1120px;
+    max-width: 1280px;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -24,11 +24,23 @@
     padding-bottom: 50px;
 }
 
+.filtro {
+    padding-left: 30px;
+}
+
+.col-md-9 {
+    padding-right: 50px;
+}
+
 /* Titulo */
 
 h1 {
     color: #78c2ad !important;
     padding-bottom: 5px;
+}
+
+h5 {
+    margin-top: 10px;
 }
 
 /* Boton Agregar */
@@ -183,11 +195,15 @@ h1 {
     color: blue;
 }
 
+.dropdown-item {
+    padding: 10px;
+}
+
 .item-txt {
     display: table-cell;
     padding-left: 10px;
     vertical-align: middle;  
-    font-size: 14px;  
+    font-size: 14px;
 }
 
 /* Editar */
@@ -196,11 +212,13 @@ h1 {
     color: black !important;
     cursor: pointer;
     vertical-align: middle;
+    width: 100%;
 }
 
 .edit-item:hover {
     color: black !important;
     background-color: #cfe2ff;
+    width: 100%;
 }
 
 /* Activar */

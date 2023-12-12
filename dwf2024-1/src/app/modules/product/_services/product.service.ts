@@ -45,6 +45,6 @@ export class ProductService {
   }
 
   getProductsByCategory(category_id: number) {
-    return this.http.get<DtoProductList[]>(this.url + this.route + "/" + category_id);
+    return this.http.get<DtoProductList[]>(this.url + this.route + "/category/" + category_id);
   }
 }

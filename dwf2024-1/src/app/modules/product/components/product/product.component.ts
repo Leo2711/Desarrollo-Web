@@ -60,11 +60,114 @@ export class ProductComponent {
     this.currentPage = pageNumber;
   }
 
-  getCategory(id: number) {
-    return this.categories.find(element => element.category_id == id)?.category;
+  showModalForm() {
+    this.form.reset();
+    this.submitted = false;
+    this.getCategories();
+    $("#modalForm").modal("show");
   }
 
   // CRUD product
+
+  getProducts() {
+    this.sortStatus = true;
+    this.productService.getProducts().subscribe(
+      res => {
+        this.products = res; // asigna la respuesta de la API a la lista de productos
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  onSubmit() {
+    // valida el formulario
+    this.submitted = true;
+    if (this.form.invalid) return;
+    this.submitted = false;
+
+    this.productService.createProduct(this.form.value).subscribe(
+      res => {
+        // muestra mensaje de confirmación
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          toast: true,
+          text: 'El producto ha sido registrado',
+          background: '#E8F8F8',
+          showConfirmButton: false,
+          timer: 2000
+        });
+
+        this.getProducts(); // consulta productos con los cambios realizados
+
+        $("#modalForm").modal("hide"); // oculta el modal de registro
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  getProduct(gtin: string) {
+    if (!gtin) { return; }
+    this.productService.getProduct(gtin).subscribe(
+      res => {
+        console.log(res);
+        console.log(this.products.filter(el => el.gtin == gtin));
+        this.products = [res];
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
+        })
+      }
+    );
+  }
+
+  updateStock(product: any, quantity: any) {
+    this.productService.updateProductStock(product.gtin, quantity).subscribe(
+      (res: any) => {
+        console.log("stock actualizado");
+      },
+      err => {
+        console.log("stock NO actualizado");
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#FFEFFF',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  // updateProduct -> product-image
 
   disableProduct(id: number) {
     Swal.fire({
@@ -152,8 +255,51 @@ export class ProductComponent {
     });
   }
 
-  getProducts() {
+  getActiveProducts() {
+    this.sortStatus = false;
+    this.productService.getActiveProducts().subscribe(
+      res => {
+        this.products = res;
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  getInactiveProducts() {
+    this.sortStatus = false;
     this.productService.getProducts().subscribe(
+      res => {
+        this.products = res.filter(el => el.status == 0);
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  getProductsByCategory(category_id: number) {
+    console.log(category_id);
+    this.productService.getProductsByCategory(category_id).subscribe(
       res => {
         this.products = res; // asigna la respuesta de la API a la lista de productos
       },
@@ -172,49 +318,15 @@ export class ProductComponent {
     );
   }
 
-  onSubmit() {
-    // valida el formulario
-    this.submitted = true;
-    if (this.form.invalid) return;
-    this.submitted = false;
-
-    this.productService.createProduct(this.form.value).subscribe(
-      res => {
-        // muestra mensaje de confirmación
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          toast: true,
-          text: 'El producto ha sido registrado',
-          background: '#E8F8F8',
-          showConfirmButton: false,
-          timer: 2000
-        });
-
-        this.getProducts(); // consulta productos con los cambios realizados
-
-        $("#modalForm").modal("hide"); // oculta el modal de registro
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
-      }
-    );
-  }
+  // Auxiliares
 
   showProduct(gtin: string) {
     this.router.navigate(['product/' + gtin]);
   }
 
-  // catalogues
+  getCategory(id: number) {
+    return this.categories.find(element => element.category_id == id)?.category;
+  }
 
   getCategories() {
     this.categoryService.getCategories().subscribe(
@@ -234,15 +346,6 @@ export class ProductComponent {
         });
       }
     );
-  }
-
-  // modals 
-
-  showModalForm() {
-    this.form.reset();
-    this.submitted = false;
-    this.getCategories();
-    $("#modalForm").modal("show");
   }
 
   addToCart(product: any, quantity: number = 1) {
@@ -269,45 +372,6 @@ export class ProductComponent {
           background: '#F8E8F8',
           timer: 2000
         });
-      }
-    );
-  }
-
-  updateStock(product: any, quantity:any) {
-    this.productService.updateProductStock(product.gtin, quantity).subscribe(
-      (res: any) => {
-        console.log("stock actualizado");
-      },
-      err => {
-        console.log("stock NO actualizado");
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#FFEFFF',
-          timer: 2000
-        });
-      }
-    );
-  }
-  
-  getProduct(gtin: string) {
-    if (!gtin) { return; }
-    this.productService.getProduct(gtin).subscribe(
-      res => {
-        console.log(res);
-        console.log(this.products.filter(el => el.gtin == gtin));
-        this.products = [res];        
-      },
-      err => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
       }
     );
   }
