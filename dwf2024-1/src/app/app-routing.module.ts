@@ -11,7 +11,8 @@ import { InvoiceComponent } from './modules/invoice/components/invoice/invoice.c
 import { CartComponent } from './modules/invoice/components/cart/cart.component';
 
 const routes: Routes = [
-  { path: "category", component: CategoryComponent},
+  { path: "", component: ProductComponent },
+  { path: "category", component: CategoryComponent },
   { path: "region", component: RegionComponent },
   { path: "consume-api", component: DatosUnamComponent },
   { path: "customer", component: CustomerComponent },

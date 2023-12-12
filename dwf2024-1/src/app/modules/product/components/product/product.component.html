@@ -1,45 +1,55 @@
 <div class="card">
+  <div class="card-body">
+    <!-- TITULO VISTA -->
+    <div class="title">
+      <h1> Listado de Productos </h1>
+    </div>
 
-  <!-- Table title  -->
+    <!-- BOTON AGREGAR -->
+    <div class="botonDer">
+      <button type="button" class="btn btn-primary btn-new" (click)="showModalForm()">
+        <i class="ph ph-plus-circle icon-text-button"></i>
+        <p class="new-cat"> Nuevo producto </p>
+      </button>
+    </div>
 
-  <div class="card-header">
-    <div class="row">
-      <div class="col-md">
-        <h5 class="table-title">Productos</h5>
-      </div>
-      <div class="col-md">
-        <button type="button" class="btn btn-primary btn-new" (click)="showModalForm()">
-          <i class="ph ph-plus-circle icon-text-button"></i>
-          Nuevo producto
-        </button>
+    <!-- BUSCADOR -->
+    <div class="input-group mb-3">
+      <input #productGTINInput type="text" class="form-control" placeholder="Buscar por #gtin ..." id="Buscar"
+        aria-describedby="basic-addon2">
+      <span (click)="cleanSearch(productGTINInput)" class="input-group-text">&times;</span>
+      <div class="input-group-append cursor-pointer">
+        <button (click)="getProduct(productGTINInput.value)" class="btn btn-outline-secondary"
+          type="button">Buscar</button>
       </div>
     </div>
   </div>
 
-  <!-- Table content -->
-
-  <div class="card-body">
+  <!-- CONTENT -->
+  <div class="card-products">
     <!--<div class="row">
-      <div class="col-md-2">
-        <h4>Categorías</h4>
-        <li *ngFor="let cat of categories"> {{ cat.category }} </li>
-      </div>
-      <div class="col-md-10">-->
+    <div class="col-md-2">
+      <h4>Categorías</h4>
+      <li *ngFor="let cat of categories"> {{ cat.category }} </li>
+    </div>
+    <div class="col-md-10">-->
     <div class="card-deck">
-      <div *ngFor="let product of products" class="container d-flex justify-content-center">
+      <div
+        *ngFor="let product of products | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: products.length}"
+        class="container d-flex justify-content-center">
         <figure class="cardp card-product-grid card-lg">
           <a class="img-wrap" data-abc="true" (click)="showProduct(product.gtin)">
-            <img src="https://www.libreriahuequito.com/public/images/productos/default.png">
+            <img src="/assets/img/no-product-image.png" alt="..." class="img-thumbnail product-image">
           </a>
           <figcaption class="info-wrap">
             <div class="row">
               <div class="col-md-7 col-xs-7">
-                <a href="#" class="title" data-abc="true"> {{ product.product }} </a>
+                <a class="title id" data-abc="true"> {{ product.product }} </a>
                 <span class="rated"> #{{ product.gtin }} </span>
               </div>
               <div class="col-md-3 col-xs-3">
                 <div class="rating text-right">
-                  <div class="td-status"
+                  <div class="td-status cursor-pointer"
                     [ngClass]="{'td-status-enable': product.status == 1, 'td-status-disable': product.status == 0}">
                     <a *ngIf="product.status == 0" (click)="enableProduct(product.product_id)">
                       {{ "Inactivo" }}
@@ -56,7 +66,7 @@
             <figcaption class="info-wrap">
               <div class="row">
                 <div class="col-md-6 col-xs-6">
-                  <a href="#" class="title" data-abc="true">
+                  <a class="title id" data-abc="true">
                     {{ product.price | currency: 'MXN'}} </a>
                 </div>
                 <div class="col-md-6 col-xs-6">
@@ -74,10 +84,13 @@
         </figure>
       </div>
     </div>
+    <!-- PAGINADOR -->
+    <div class="pagination-controls">
+      <pagination-controls (pageChange)="onPageChange($event)" previousLabel="Anterior" nextLabel="Siguiente">
+      </pagination-controls>
+    </div>
   </div>
 </div>
-<!--</div>
-</div>-->
 
 <!-- Modal form  -->
 

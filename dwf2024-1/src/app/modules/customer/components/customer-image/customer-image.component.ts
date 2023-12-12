@@ -5,8 +5,8 @@ import { CustomerService } from '../../_services/customer.service';
 
 import Swal from'sweetalert2'; // sweetalert
 import { FormBuilder, Validators } from '@angular/forms';
-import { Region } from '../../_models/region';
-import { RegionService } from '../../_services/region.service';
+import { Region } from '../../../region/_models/region';
+import { RegionService } from '../../../region/_services/region.service';
 import { NgxPhotoEditorService } from 'ngx-photo-editor';
 import { CustomerImageService } from '../../_services/customer-image.service';
 import { CustomerImage } from '../../_models/customer-image';
@@ -189,6 +189,7 @@ export class CustomerImageComponent {
           background: '#F8E8F8',
           timer: 2000
         });
+        console.log(err.error.message);
       }
     );
   }

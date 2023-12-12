@@ -161,7 +161,7 @@ export class ProductImageComponent {
     productImage.product_image_id = this.product.product_image_id;
     productImage.image = image;
 
-    this.productImageService.createProductImage(productImage).subscribe(
+    this.productImageService.uploadProductImage(productImage).subscribe(
       res => {
         // muestra mensaje de confirmación
         Swal.fire({

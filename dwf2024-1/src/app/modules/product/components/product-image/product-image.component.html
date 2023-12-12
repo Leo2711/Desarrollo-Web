@@ -2,16 +2,16 @@
     <div class="card-header">
         <div class="row">
             <div class="col-md">
-                <span class="btn-return" (click)="redirect(['product'])">
+                <span class="btn-return cursor-pointer" (click)="redirect(['product'])">
                     <i class="ph ph-arrow-circle-left icon-text-button"></i>
-                    Regresar
+                    <p class="item-txt"> Regresar </p>
                 </span>
             </div>
 
             <div class="col-md">
                 <span class="edit-product" (click)="updateProduct()">
                     <i class="ph ph-note-pencil icon-text-button"></i>
-                    Editar producto
+                    <p class="item-txt"> Editar producto </p>
                 </span>
             </div>
         </div>
@@ -26,16 +26,15 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body-product text-center">
-                        <img src="{{ product.image != '' ? product.image : 'assets/img/user_logo.jpg' }}"
+                        <img src="{{ product.image !== '' ? product.image : '/assets/img/no-product-image.png' }}"
                             alt="..." class="img-thumbnail product-image">
                     </div>
                     <div class="edit-product-image text-center">
                         <label for="uploadImage" class="cursor-pointer">
                             <input type="file" (change)="fileChangeHandler($event)" id="uploadImage"
                                 style="display:none">
-
                             <i class="ph ph-note-pencil icon-text-button"></i>
-                            Editar imagen
+                            <p class="item-txt"> Editar imagen </p>
                         </label>
                     </div>
                 </div>
@@ -49,9 +48,9 @@
 
                         <!-- product -->
 
-                        <div class="product-title">
+                        <h1>
                             {{ product.product }}
-                        </div>
+                        </h1>
 
                         <table class="table">
                             <tbody>

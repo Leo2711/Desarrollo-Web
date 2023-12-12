@@ -24,6 +24,10 @@ export class ProductComponent {
   cart: any | Cart[] = [];
   rfc: any | string = "";
 
+  sortStatus = true;
+  currentPage = 1;
+  itemsPerPage = 12;
+
   // formulario de registro
   form = this.formBuilder.group({
     product: ["", [Validators.required]],
@@ -51,6 +55,11 @@ export class ProductComponent {
     this.rfc = localStorage.getItem('user_rfc');
   }
 
+  // Función para cambiar la página
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+  }
+
   getCategory(id: number) {
     return this.categories.find(element => element.category_id == id)?.category;
   }
@@ -68,7 +77,7 @@ export class ProductComponent {
       confirmButtonText: "Desactivar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productService.disableProduct(id).subscribe(
+        this.productService.deleteProduct(id).subscribe(
           res => {
             // muestra mensaje de confirmación
             Swal.fire({
@@ -111,7 +120,7 @@ export class ProductComponent {
       confirmButtonText: "Activar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productService.enableProduct(id).subscribe(
+        this.productService.activateProduct(id).subscribe(
           res => {
             // muestra mensaje de confirmación
             Swal.fire({
@@ -283,5 +292,28 @@ export class ProductComponent {
         });
       }
     );
+  }
+  
+  getProduct(gtin: string) {
+    if (!gtin) { return; }
+    this.productService.getProduct(gtin).subscribe(
+      res => {
+        console.log(res);
+        console.log(this.products.filter(el => el.gtin == gtin));
+        this.products = [res];        
+      },
+      err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
+        })
+      }
+    );
+  }
+
+  cleanSearch(inputField: HTMLInputElement) {
+    inputField.value = '';
+    this.getProducts();
   }
 }
