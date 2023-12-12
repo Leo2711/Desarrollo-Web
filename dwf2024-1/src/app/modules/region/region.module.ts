@@ -5,16 +5,16 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryComponent } from './components/category/category.component';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { RegionComponent } from './components/region/region.component';
+import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
-    CategoryComponent
+    RegionComponent
   ],
   imports: [
     SharedModule,
@@ -26,7 +26,7 @@ import { SharedModule } from '../shared/shared.module';
     HttpClientModule,
   ],
   exports: [
-    CategoryComponent,
+    RegionComponent,
   ]
 })
-export class CategoryModule { }
+export class RegionModule { }

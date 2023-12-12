@@ -34,7 +34,7 @@ h1 {
 
 .btn-new {
     float: right;
-    width: 200px;
+    width: 180px;
     font-weight: 500;
 }
 
@@ -43,12 +43,12 @@ h1 {
 .icon-text-button {
     font-size: 25px;
     display: table-cell;
-    padding-left: 10px;
+    padding-left: 2px;
 }
 
 .new-cat {
     display: table-cell;
-    padding-left: 10px;
+    padding-left: 8px;
     vertical-align: middle;
     font-size: 16px;
 }

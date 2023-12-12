@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegionComponent } from './modules/customer/components/region/region.component';
+import { RegionComponent } from './modules/region/components/region/region.component';
 import { DatosUnamComponent } from './modules/consume-api/datos-unam/datos-unam.component';
 import { CustomerComponent } from './modules/customer/components/customer/customer.component';
 import { CustomerImageComponent } from './modules/customer/components/customer-image/customer-image.component';

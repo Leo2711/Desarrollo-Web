@@ -1,25 +1,25 @@
-import { Component } from '@angular/core';
-import { DtoCustomerList } from '../../_dtos/dto-customer-list';
-import { Region } from '../../../region/_models/region';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../_services/customer.service';
-import { RegionService } from '../../../region/_services/region.service';
+/* @author Mónica Miranda Mijangos 
+  @author Eduardo Leónel Sánchez Velasco 
+  Version: 4
+  Fecha: 11/12/2023 */
 
+import { Component } from '@angular/core';
+import { Region } from '../../_models/region';
+import { FormBuilder, Validators } from '@angular/forms';
+import { RegionService } from '../../_services/region.service';
 import Swal from 'sweetalert2'; // sweetalert
-import { Router } from '@angular/router';
 
 declare var $: any; // jquery
 
 @Component({
   selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.css']
+  templateUrl: './region.component.html',
+  styleUrls: ['./region.component.css']
 })
+export class RegionComponent {
 
-export class CustomerComponent {
-
-  customers: DtoCustomerList[] = []; // lista de clientes
   regions: Region[] = []; // lista de regiones
+  regionUpdated: number = 0; // id de la región a actualizar
 
   sortStatus = true;
   currentPage = 1;
@@ -27,26 +27,19 @@ export class CustomerComponent {
 
   // formulario de registro
   form = this.formBuilder.group({
-    name: ["", [Validators.required, Validators.pattern("^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ ]+$")]],
-    surname: ["", [Validators.required, Validators.pattern("^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ ]+$")]],
-    rfc: ["", [Validators.required, Validators.pattern("^[ñA-Z]{3,4}[0-9]{6}[0-9A-Z]{3}$")]],
-    mail: ["", [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-    region_id: ["", [Validators.required]],
-    address: ["", [Validators.required]],
+    region: ["", [Validators.required]],
+    code: ["", [Validators.required]],
   });
 
   submitted = false; // indica si se envió el formulario
 
   constructor(
-    private customerService: CustomerService, // servicio customer de API
     private formBuilder: FormBuilder, // formulario
-    private regionService: RegionService, // servicio region de API
-    private router: Router, // redirigir a otro componente
+    private regionService: RegionService // servicio region de API
   ) { }
 
-  // primera función que se ejecuta
   ngOnInit() {
-    this.getCustomers();
+    this.getRegions();
   }
 
   // Función para cambiar la página
@@ -54,18 +47,34 @@ export class CustomerComponent {
     this.currentPage = pageNumber;
   }
 
-  // Modal
+  // modal
+
   showModalForm() {
     this.form.reset();
+    this.regionUpdated = 0;
     this.submitted = false;
-    this.getRegions();
     $("#modalForm").modal("show");
   }
 
-  getCustomers() {
-    this.customerService.getCustomers().subscribe(
+  onSubmit() {
+    // valida el formulario
+    this.submitted = true;
+    if (this.form.invalid) return;
+    this.submitted = false;
+
+    // ejecuta la función crear o actualizar según corresponda
+    if (this.regionUpdated == 0) {
+      this.onSubmitCreate();
+    } else {
+      this.onSubmitUpdate();
+    }
+  }
+
+  getRegions() {
+    this.regionService.getRegions().subscribe(
       res => {
-        this.customers = res; // asigna la respuesta de la API a la lista de clientes
+        this.regions = res.sort((a, b) => a.region_id - b.region_id);;
+        console.log(this.regions);
       },
       err => {
         // muestra mensaje de error
@@ -82,27 +91,22 @@ export class CustomerComponent {
     );
   }
 
-  // createCustomer
-  onSubmit() {
-    // valida el formulario
-    this.submitted = true;
-    if (this.form.invalid) return;
-    this.submitted = false;
-
-    this.customerService.createCustomer(this.form.value).subscribe(
+  // create
+  onSubmitCreate() {
+    this.regionService.createRegion(this.form.value).subscribe(
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
           position: 'top-end',
           icon: 'success',
           toast: true,
-          text: 'El cliente ha sido registrado',
+          text: 'La región ha sido registrada',
           background: '#E8F8F8',
           showConfirmButton: false,
           timer: 2000
         });
 
-        this.getCustomers(); // consulta clientes con los cambios realizados
+        this.getRegions(); // consulta regiones con los cambios realizados
 
         $("#modalForm").modal("hide"); // oculta el modal de registro
       },
@@ -121,77 +125,14 @@ export class CustomerComponent {
     );
   }
 
-  // UPDATE -> Customer-Image
-
-  disableCustomer(id: number) {
-    this.customerService.deleteCustomer(id).subscribe(
-      res => {
-        // muestra mensaje de confirmación
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          toast: true,
-          text: 'El cliente ha sido desactivado',
-          background: '#E8F8F8',
-          showConfirmButton: false,
-          timer: 2000
-        });
-
-        this.getCustomers(); // consulta clientes con los cambios realizados
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
-      }
-    );
-  }
-
-  enableCustomer(id: number) {
-    this.customerService.activateCustomer(id).subscribe(
-      res => {
-        // muestra mensaje de confirmación
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          toast: true,
-          text: 'El cliente ha sido activado',
-          background: '#E8F8F8',
-          showConfirmButton: false,
-          timer: 2000
-        });
-
-        this.getCustomers(); // consulta clientes con los cambios realizados
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
-      }
-    );
-  }  
-
-  getCustomer(rfc: string) {
-    if (!rfc) { return; }
-    this.customerService.getCustomer(rfc).subscribe(
+  getRegion(id: string) {
+    if (!id) { return; }
+    let id_region = Number(id);
+    this.regionService.getRegion(id_region).subscribe(
       res => {
         console.log(res);
-        console.log(this.customers.filter(el => el.rfc == rfc));
-        this.customers = [res];        
+        console.log(this.regions.filter(el => el.region_id == id_region));
+        this.regions = [res];        
       },
       err => {
         Swal.fire({
@@ -203,75 +144,153 @@ export class CustomerComponent {
     );
   }
 
-  // Auxiliars
+  updateRegion(region: Region) {
+    this.regionUpdated = region.region_id;
 
-  showCustomer(rfc: string) {
-    this.router.navigate(['customer/' + rfc]);
+    this.form.reset();
+    this.form.controls['region'].setValue(region.region);
+    this.form.controls['code'].setValue(region.code);
+
+    this.submitted = false;
+    $("#modalForm").modal("show");
   }
 
-  getRegions() {
+  onSubmitUpdate() {
+    this.regionService.updateRegion(this.form.value, this.regionUpdated).subscribe(
+      res => {
+        // muestra mensaje de confirmación
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          toast: true,
+          text: 'La región ha sido actualizada',
+          background: '#E8F8F8',
+          showConfirmButton: false,
+          timer: 2000
+        });
+
+        this.getRegions(); // consulta regiones con los cambios realizados
+
+        $("#modalForm").modal("hide"); // oculta el modal de registro
+
+        this.regionUpdated = 0; // resetea el id de la región que se actualiza a 0
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  disableRegion(id: number) {
+    this.regionService.deleteRegion(id).subscribe(
+      res => {
+        // muestra mensaje de confirmación
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          toast: true,
+          text: 'La región ha sido desactivada',
+          background: '#E8F8F8',
+          showConfirmButton: false,
+          timer: 2000
+        });
+
+        this.getRegions();
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  enableRegion(id: number) {
+    this.regionService.activateRegion(id).subscribe(
+      res => {
+        // muestra mensaje de confirmación
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          toast: true,
+          text: 'La región ha sido activada',
+          background: '#E8F8F8',
+          showConfirmButton: false,
+          timer: 2000
+        });
+
+        this.getRegions();
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  getActiveRegions() {
+    this.regionService.getActiveRegions().subscribe(
+      res => {
+        this.regions = res;
+      },
+      err => {
+        // muestra mensaje de error
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          toast: true,
+          showConfirmButton: false,
+          text: err.error.message,
+          background: '#F8E8F8',
+          timer: 2000
+        });
+      }
+    );
+  }
+
+  getInactiveRegions() {
+    this.sortStatus = false;
     this.regionService.getRegions().subscribe(
       res => {
-        this.regions = res; // asigna la respuesta de la API a la lista de regiones
+        this.regions = res.sort((a, b) => a.region_id - b.region_id);
+        this.regions = this.regions.filter(el => el.status == 0);
       },
       err => {
-        // muestra mensaje de error
         Swal.fire({
-          position: 'top-end',
           icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
-      }
-    );
-  }
-
-  getInactiveCustomers() {
-    this.customerService.getCustomers().subscribe(
-      res => {
-        this.customers = res.filter(el => el.status == 0);
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
-      }
-    );
-  }
-  
-  getActiveCustomers() {
-    this.customerService.getCustomers().subscribe(
-      res => {
-        this.customers = res.filter(el => el.status == 1);
-      },
-      err => {
-        // muestra mensaje de error
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          toast: true,
-          showConfirmButton: false,
-          text: err.error.message,
-          background: '#F8E8F8',
-          timer: 2000
-        });
+          title: 'Oops...',
+          text: 'Algo salió mal al obtener los datos.'
+        })
       }
     );
   }
 
   cleanSearch(inputField: HTMLInputElement) {
     inputField.value = '';
-    this.getCustomers();
+    this.getRegions();
   }
-
 }

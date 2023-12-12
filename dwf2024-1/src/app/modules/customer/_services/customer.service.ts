@@ -12,27 +12,27 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  createCustomer(customer: any) {
-    return this.http.post(this.url + this.route, customer);
-  }
-
-  enableCustomer(id: number) {
-    return this.http.put(this.url + this.route + "/" + id + "/activate", null);
-  }
-
-  disableCustomer(id: number) {
-    return this.http.delete(this.url + this.route + "/" + id);
-  }
-
-  getCustomer(rfc: string) {
-    return this.http.get(this.url + this.route + "/" + rfc);
-  }
-
   getCustomers() {
     return this.http.get<DtoCustomerList[]>(this.url + this.route);
   }
 
+  createCustomer(customer: any) {
+    return this.http.post(this.url + this.route, customer);
+  }
+
   updateCustomer(customer: any, id: number) {
     return this.http.put(this.url + this.route + "/" + id, customer);
+  }
+
+  deleteCustomer(id: number) {
+    return this.http.delete(this.url + this.route + "/" + id);
+  }
+
+  activateCustomer(id: number) {
+    return this.http.put(this.url + this.route + "/" + id + "/activate", null);
+  }
+
+  getCustomer(rfc: string) {
+    return this.http.get<DtoCustomerList>(this.url + this.route + "/" + rfc);
   }
 }

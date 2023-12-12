@@ -8,7 +8,7 @@ import { Category } from '../../_models/category';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from "../../_services/category.service";
 import Swal from 'sweetalert2'
-import { filter } from 'rxjs';
+
 declare var $: any;
 
 @Component({
@@ -142,7 +142,7 @@ export class CategoryComponent {
       res => {
         console.log(res);
         console.log(this.categories.filter(el => el.category_id == id_category));
-        this.categories = [res];        
+        this.categories = [res];
       },
       err => {
         Swal.fire({
@@ -226,7 +226,7 @@ export class CategoryComponent {
   getInactiveCategories() {
     this.sortStatus = false;
     this.categoryService.getCategories().subscribe(
-      res => {        
+      res => {
         this.categories = res.sort((a, b) => a.category_id - b.category_id); // lista de categorías de la API
         this.categories = this.categories.filter(el => el.status == 0);
       },
