@@ -5,11 +5,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../../_services/product.service';
 import { CategoryService } from '../../../category/_services/category.service';
 
-import Swal from 'sweetalert2'; // sweetalert
 import { Router } from '@angular/router';
-import { CategoryModule } from 'src/app/modules/category/category.module';
 import { Cart } from 'src/app/modules/invoice/_models/cart';
 import { CartService } from 'src/app/modules/invoice/_services/cart.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
+
+import Swal from 'sweetalert2'; // sweetalert
 
 declare var $: any; // jquery
 
@@ -38,7 +39,10 @@ export class ProductComponent {
     category_id: ["", [Validators.required]],
   });
 
-  submitted = false; // indica si se envió el formulario
+  submitted: boolean = false; // indica si se envió el formulario
+  orden: string = "asc";
+  selectedOption: string | null = null;
+  selectedCategory: number | null = null;
 
   constructor(
     private cartService: CartService, // servicio cart de API
@@ -46,6 +50,7 @@ export class ProductComponent {
     private formBuilder: FormBuilder, // formulario
     private productService: ProductService, // servicio product de API
     private router: Router, // redirigir a otro componente
+    private layoutService: LayoutService
   ) { }
 
   // primera función que se ejecuta
@@ -53,6 +58,13 @@ export class ProductComponent {
     this.getProducts();
     this.getCategories();
     this.rfc = localStorage.getItem('user_rfc');
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
+  }
+
+  selected(option: string) {
+    this.selectedOption = option;
   }
 
   // Función para cambiar la página
@@ -69,11 +81,16 @@ export class ProductComponent {
 
   // CRUD product
 
-  getProducts() {
+  getProducts(sort: string = 'todo') {
     this.sortStatus = true;
+    this.selectedOption = sort;
+    this.selectedCategory = 0;
     this.productService.getProducts().subscribe(
       res => {
-        this.products = res; // asigna la respuesta de la API a la lista de productos
+        this.products = res.sort((a, b) => a.product_id - b.product_id);
+        this.cartService.getCount().subscribe(count => {
+          this.layoutService.updateLayout(count);
+        });
       },
       err => {
         // muestra mensaje de error
@@ -261,6 +278,7 @@ export class ProductComponent {
 
   getActiveProducts() {
     this.sortStatus = false;
+    this.selectedOption = 'activo';
     this.productService.getActiveProducts().subscribe(
       res => {
         this.products = res;
@@ -282,6 +300,8 @@ export class ProductComponent {
 
   getInactiveProducts() {
     this.sortStatus = false;
+    this.selectedOption = 'inactivo';
+    this.selectedCategory = 0;
     this.productService.getProducts().subscribe(
       res => {
         this.products = res.filter(el => el.status == 0);
@@ -313,7 +333,8 @@ export class ProductComponent {
   }
 
   getProductsByCategory(category_id: number) {
-    console.log(category_id);
+    this.selectedCategory = category_id;
+    this.selectedOption = 'activo'
     this.productService.getProductsByCategory(category_id).subscribe(
       res => {
         this.products = res;
@@ -397,6 +418,7 @@ export class ProductComponent {
       (res: any) => {
         this.cart = res;
         this.updateStock(product, -quantity);
+        this.updateCount(quantity);
       },
       err => {
         // muestra mensaje de error
@@ -417,4 +439,12 @@ export class ProductComponent {
     inputField.value = '';
     this.getProducts();
   }
+
+  updateCount(quantity: number) {
+    this.cartService.updateCount(quantity);
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
+  }
 }
+

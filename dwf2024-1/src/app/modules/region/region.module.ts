@@ -13,9 +13,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    RegionComponent
-  ],
+  declarations: [],
   imports: [
     SharedModule,
     CommonModule,
@@ -25,8 +23,5 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     HttpClientModule,
   ],
-  exports: [
-    RegionComponent,
-  ]
 })
 export class RegionModule { }

@@ -1,12 +1,15 @@
 /* @author Mónica Miranda Mijangos 
   @author Eduardo Leónel Sánchez Velasco 
-  Version: 4
-  Fecha: 11/12/2023 */
+  Version: 5
+  Fecha: 12/12/2023 */
 
 import { Component } from '@angular/core';
 import { Category } from '../../_models/category';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from "../../_services/category.service";
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
+import { CartService } from 'src/app/modules/invoice/_services/cart.service';
+
 import Swal from 'sweetalert2'
 
 declare var $: any;
@@ -35,11 +38,16 @@ export class CategoryComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private cartService: CartService,
+    private layoutService: LayoutService
   ) { }
 
   ngOnInit() {
     this.getCategories();
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
   }
 
   // Función para cambiar la página

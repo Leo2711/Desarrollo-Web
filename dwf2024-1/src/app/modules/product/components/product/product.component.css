@@ -215,7 +215,7 @@ h5 {
     width: 100%;
 }
 
-.edit-item:hover {
+.edit-item:hover, .selected {
     color: black !important;
     background-color: #cfe2ff;
     width: 100%;

@@ -8,6 +8,8 @@ import { Region } from '../../_models/region';
 import { FormBuilder, Validators } from '@angular/forms';
 import { RegionService } from '../../_services/region.service';
 import Swal from 'sweetalert2'; // sweetalert
+import { CartService } from 'src/app/modules/invoice/_services/cart.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 declare var $: any; // jquery
 
@@ -35,11 +37,16 @@ export class RegionComponent {
 
   constructor(
     private formBuilder: FormBuilder, // formulario
-    private regionService: RegionService // servicio region de API
+    private regionService: RegionService, // servicio region de API
+    private cartService: CartService,
+    private layoutService: LayoutService
   ) { }
 
   ngOnInit() {
     this.getRegions();
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
   }
 
   // Función para cambiar la página

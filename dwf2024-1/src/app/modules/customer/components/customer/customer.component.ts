@@ -7,6 +7,8 @@ import { RegionService } from '../../../region/_services/region.service';
 
 import Swal from 'sweetalert2'; // sweetalert
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/modules/invoice/_services/cart.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 declare var $: any; // jquery
 
@@ -42,11 +44,16 @@ export class CustomerComponent {
     private formBuilder: FormBuilder, // formulario
     private regionService: RegionService, // servicio region de API
     private router: Router, // redirigir a otro componente
+    private cartService: CartService,
+    private layoutService: LayoutService,
   ) { }
 
   // primera función que se ejecuta
   ngOnInit() {
     this.getCustomers();
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
   }
 
   // Función para cambiar la página

@@ -10,6 +10,8 @@ import { RegionService } from '../../../region/_services/region.service';
 import { NgxPhotoEditorService } from 'ngx-photo-editor';
 import { CustomerImageService } from '../../_services/customer-image.service';
 import { CustomerImage } from '../../_models/customer-image';
+import { CartService } from 'src/app/modules/invoice/_services/cart.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 declare var $: any; // jquery
 
@@ -45,7 +47,8 @@ export class CustomerImageComponent {
     private regionService: RegionService, // servicio region de API
     private route: ActivatedRoute, // recupera parámetros de la url
     private router: Router, // redirigir a otro componente
-
+    private cartService: CartService,
+    private layoutService: LayoutService,
     private service: NgxPhotoEditorService
   ){}
 
@@ -64,6 +67,9 @@ export class CustomerImageComponent {
         timer: 2000
       });
     }
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
   }
 
   // CRUD customer

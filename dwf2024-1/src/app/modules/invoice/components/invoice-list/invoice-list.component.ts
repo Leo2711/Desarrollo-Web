@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../../_services/invoice.service';
 import Swal from 'sweetalert2';
 import { ProductService } from 'src/app/modules/product/_services/product.service';
+import { CartService } from '../../_services/cart.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 @Component({
   selector: 'app-invoice-list',
@@ -24,11 +26,16 @@ export class InvoiceListComponent {
     private route: ActivatedRoute, // recupera parámetros de la url
     private router: Router, // redirigir a otro componente
     private invoiceService: InvoiceService, // servicio invoice de API
+    private cartService: CartService,
+    private layoutService: LayoutService
   ) { }
 
   ngOnInit() {
     this.rfc = localStorage.getItem('user_rfc');
-    this.getInvoices();      
+    this.getInvoices();    
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });  
   }
 
   // Función para cambiar la página

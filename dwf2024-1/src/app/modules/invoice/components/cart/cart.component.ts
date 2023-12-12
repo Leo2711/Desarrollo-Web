@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../../_services/invoice.service';
 import { ProductService } from 'src/app/modules/product/_services/product.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 @Component({
   selector: 'app-cart',
@@ -28,7 +29,8 @@ export class CartComponent {
     private router: Router, // redirigir a otro componente
     private cartService: CartService, // servicio cart de API
     private invoiceService: InvoiceService,
-    private productService: ProductService
+    private productService: ProductService,
+    private layoutService: LayoutService
   ) { }
 
   ngOnInit() {
@@ -180,7 +182,7 @@ export class CartComponent {
           this.count += element.quantity;
           this.total += element.product.price * element.quantity;
         });
-        this.cartService.updateCount(this.count);
+        this.layoutService.updateLayout(this.count);
       }
     )
   }
@@ -227,6 +229,5 @@ export class CartComponent {
   redirect(url: string[]){
     this.router.navigate(url);
   }
-
 }
 

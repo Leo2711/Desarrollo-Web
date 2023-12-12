@@ -6,8 +6,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { RouterNavbarComponent } from './router-navbar/router-navbar.component';
 
-
-
 @NgModule({
   declarations: [
     FooterComponent,

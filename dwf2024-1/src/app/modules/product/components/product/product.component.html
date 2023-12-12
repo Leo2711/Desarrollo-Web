@@ -32,27 +32,42 @@
       <!-- FILTRO -->
       <div class="col-md-3 filtro">
         <div class="filtro-content">
-          <h4> Filtrar por:</h4>
-          <h5> Estatus </h5>
-          <a class="dropdown-item edit-item" (click)="getProducts()">
+          <h4> Filtrar por:</h4>          
+          <a class="dropdown-item edit-item" [ngClass]="{ 'selected': selectedOption === 'todo' }" (click)="getProducts()" [appSort]="products" data-order="asc" data-name="product_id">
             <i class="ph ph-eye icon-text-ul"></i>
             <p class="item-txt">Todo</p>
           </a>
-          <a class="dropdown-item edit-item" (click)="getActiveProducts()">
+          <a class="dropdown-item edit-item" [ngClass]="{ 'selected': selectedOption === 'products' }" (click)="selected('products')" [appSort]="products" data-order="asc" data-name="product">
+            <i class="ph ph-caret-up-down icon-text-ul"></i>
+            <p class="item-txt">A - Z</p>
+          </a>
+          <a class="dropdown-item edit-item" [ngClass]="{ 'selected': selectedOption === 'gtin' }" (click)="selected('gtin')" [appSort]="products" data-order="asc" data-name="gtin">
+            <i class="ph ph-hash icon-text-ul"></i>
+            <p class="item-txt">Gtin</p>
+          </a>
+          <a class="dropdown-item edit-item" [ngClass]="{ 'selected': selectedOption === 'price' }" (click)="selected('price')" [appSort]="products" data-order="asc" data-name="price">
+            <i class="ph ph-currency-dollar-simple icon-text-ul"></i>
+            <p class="item-txt">Precio</p>
+          </a>          
+          <h5> Estatus </h5>
+          <a class="dropdown-item edit-item" [ngClass]="{ 'selected': selectedOption === 'activo' }" (click)="getActiveProducts()">
             <i class="ph ph-check-circle icon-text-ul"></i>
             <p class="item-txt">Activo</p>
           </a>
-          <a class="dropdown-item edit-item" (click)="getInactiveProducts()">
+          <a class="dropdown-item edit-item" [ngClass]="{ 'selected': selectedOption === 'inactivo' }" (click)="getInactiveProducts()">
             <i class="ph ph-x-circle icon-text-ul"></i>
             <p class="item-txt">Inactivo</p>
           </a>
         </div>
         <h5>Categorías</h5>
-        <a *ngFor="let cat of categories" class="dropdown-item edit-item"
-          (click)="getProductsByCategory(cat.category_id)">
-          <i class="ph ph-shopping-cart-simple icon-text-ul"></i>
-          <p class="item-txt">{{ cat.category }}</p>
-        </a>
+        <div *ngFor="let cat of categories">
+          <a class="dropdown-item edit-item"
+            [ngClass]="{ 'selected': selectedCategory === cat.category_id }"
+            (click)="getProductsByCategory(cat.category_id)">
+            <i class="ph ph-shopping-cart-simple icon-text-ul"></i>
+            <p class="item-txt">{{ cat.category }}</p>
+          </a>
+        </div>
       </div>
 
       <!-- PRODUCTOS -->

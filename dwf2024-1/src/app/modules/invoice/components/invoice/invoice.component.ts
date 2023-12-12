@@ -6,6 +6,8 @@ import { InvoiceService } from '../../_services/invoice.service';
 import { ProductService } from 'src/app/modules/product/_services/product.service';
 import Swal from 'sweetalert2';
 import { Customer } from 'src/app/modules/customer/_models/customer';
+import { CartService } from '../../_services/cart.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 @Component({
   selector: 'app-invoice',
@@ -26,7 +28,9 @@ export class InvoiceComponent {
     private route: ActivatedRoute, // recupera parámetros de la url
     private router: Router, // redirigir a otro componente
     private invoiceService: InvoiceService, // servicio invoice de API
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService,
+    private layoutService: LayoutService
   ) { }
 
   ngOnInit() {
@@ -34,6 +38,10 @@ export class InvoiceComponent {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getInvoice();
     this.getCustomer();   
+
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
   }
 
   redirect(url: string[]){

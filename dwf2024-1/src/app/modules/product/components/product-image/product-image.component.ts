@@ -10,6 +10,8 @@ import { CategoryService } from '../../../category/_services/category.service';
 import { NgxPhotoEditorService } from 'ngx-photo-editor';
 import { ProductImageService } from '../../_services/product-image.service';
 import { ProductImage } from '../../_models/product-image';
+import { CartService } from 'src/app/modules/invoice/_services/cart.service';
+import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 declare var $: any; // jquery
 
@@ -45,7 +47,8 @@ export class ProductImageComponent {
     private categoryService: CategoryService, // servicio category de API
     private route: ActivatedRoute, // recupera parámetros de la url
     private router: Router, // redirigir a otro componente
-
+    private cartService: CartService,
+    private layoutService: LayoutService,
     private service: NgxPhotoEditorService
   ){}
 
@@ -64,6 +67,9 @@ export class ProductImageComponent {
         timer: 3000
       });
     }
+    this.cartService.getCount().subscribe(count => {
+      this.layoutService.updateLayout(count);
+    });
   }
 
   // CRUD product
@@ -281,7 +287,6 @@ export class ProductImageComponent {
       resizeToWidth: 360,
       resizeToHeight: 360,
     }).subscribe(data => {
-      console.log(data);
       this.updateProductImage(data.base64!);
     });
   }
