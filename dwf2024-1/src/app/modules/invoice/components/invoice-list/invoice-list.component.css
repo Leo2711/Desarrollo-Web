@@ -3,11 +3,23 @@
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 h1 {
     color: #78c2ad !important;
     padding-bottom: 5px;
+}
+
+/* Pagination */
+
+.pagination-controls {
+    margin: 0;
+    padding-top: 10px;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 .container {
@@ -28,7 +40,7 @@ h1 {
     margin: 0 -20px;
     background: #f0f3f4;
     padding: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .invoice-date,

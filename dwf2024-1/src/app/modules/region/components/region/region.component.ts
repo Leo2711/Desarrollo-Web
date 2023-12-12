@@ -73,8 +73,7 @@ export class RegionComponent {
   getRegions() {
     this.regionService.getRegions().subscribe(
       res => {
-        this.regions = res.sort((a, b) => a.region_id - b.region_id);;
-        console.log(this.regions);
+        this.regions = res.sort((a, b) => a.region_id - b.region_id);
       },
       err => {
         // muestra mensaje de error
@@ -83,9 +82,9 @@ export class RegionComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -103,7 +102,7 @@ export class RegionComponent {
           text: 'La región ha sido registrada',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         this.getRegions(); // consulta regiones con los cambios realizados
@@ -117,9 +116,9 @@ export class RegionComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: 'No se pudo crear la región',
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -130,16 +129,18 @@ export class RegionComponent {
     let id_region = Number(id);
     this.regionService.getRegion(id_region).subscribe(
       res => {
-        console.log(res);
-        console.log(this.regions.filter(el => el.region_id == id_region));
-        this.regions = [res];        
+        this.regions = [res];
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se encontró la región",
+          background: '#F8E8F8',
+          timer: 3000
+        });
       }
     );
   }
@@ -166,7 +167,7 @@ export class RegionComponent {
           text: 'La región ha sido actualizada',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         this.getRegions(); // consulta regiones con los cambios realizados
@@ -182,9 +183,9 @@ export class RegionComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar la región",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -201,7 +202,7 @@ export class RegionComponent {
           text: 'La región ha sido desactivada',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         this.getRegions();
@@ -213,9 +214,9 @@ export class RegionComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo desactivar la región",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -232,7 +233,7 @@ export class RegionComponent {
           text: 'La región ha sido activada',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         this.getRegions();
@@ -244,9 +245,9 @@ export class RegionComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo activar la región",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -256,6 +257,17 @@ export class RegionComponent {
     this.regionService.getActiveRegions().subscribe(
       res => {
         this.regions = res;
+        if (this.regions.length == 0) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            toast: true,
+            showConfirmButton: false,
+            text: "No se encontraron regiones",
+            background: 'white',
+            timer: 3000
+          });
+        }
       },
       err => {
         // muestra mensaje de error
@@ -264,9 +276,9 @@ export class RegionComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -278,13 +290,28 @@ export class RegionComponent {
       res => {
         this.regions = res.sort((a, b) => a.region_id - b.region_id);
         this.regions = this.regions.filter(el => el.status == 0);
+        if (this.regions.length == 0) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            toast: true,
+            showConfirmButton: false,
+            text: "No se encontraron regiones",
+            background: 'white',
+            timer: 3000
+          });
+        }
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: 'Algo salió mal al obtener los datos.'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "Error al cargar los datos",
+          background: '#F8E8F8',
+          timer: 3000
+        });
       }
     );
   }

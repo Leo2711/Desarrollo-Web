@@ -16,6 +16,10 @@ export class InvoiceListComponent {
   
   invoices: any | DtoInvoiceList[] = [];  
 
+  sortStatus = true;
+  currentPage = 1;
+  itemsPerPage = 10;
+
   constructor(
     private route: ActivatedRoute, // recupera parámetros de la url
     private router: Router, // redirigir a otro componente
@@ -27,6 +31,11 @@ export class InvoiceListComponent {
     this.getInvoices();      
   }
 
+  // Función para cambiar la página
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+  }
+
   showInvoice(invoice_id: string) {
     this.router.navigate(['invoice/' + invoice_id]);
   }
@@ -34,7 +43,7 @@ export class InvoiceListComponent {
   getInvoices() {
     this.invoiceService.getInvoices(this.rfc).subscribe(
       res => {
-        this.invoices = res.sort((a, b) => a.invoice_id - b.invoice_id);
+        this.invoices = res.sort((a, b) => b.invoice_id - a.invoice_id);
       },
       err => {
         // muestra mensaje de error
@@ -43,9 +52,9 @@ export class InvoiceListComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );

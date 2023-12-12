@@ -82,9 +82,9 @@ export class ProductComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -106,7 +106,7 @@ export class ProductComponent {
           text: 'El producto ha sido registrado',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         this.getProducts(); // consulta productos con los cambios realizados
@@ -120,9 +120,9 @@ export class ProductComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se puedo crear el producto",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -138,10 +138,14 @@ export class ProductComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se encontró el producto",
+          background: '#FFEFFF',
+          timer: 3000
+        });
       }
     );
   }
@@ -161,7 +165,7 @@ export class ProductComponent {
           showConfirmButton: false,
           text: err.error.message,
           background: '#FFEFFF',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -190,7 +194,7 @@ export class ProductComponent {
               text: 'El producto ha sido desactivado',
               background: '#E8F8F8',
               showConfirmButton: false,
-              timer: 2000
+              timer: 3000
             });
 
             this.getProducts(); // consulta productos con los cambios realizados
@@ -202,9 +206,9 @@ export class ProductComponent {
               icon: 'error',
               toast: true,
               showConfirmButton: false,
-              text: err.error.message,
+              text: "No se pudo desactivar el producto",
               background: '#F8E8F8',
-              timer: 2000
+              timer: 3000
             });
           }
         );
@@ -233,7 +237,7 @@ export class ProductComponent {
               text: 'El producto ha sido activado',
               background: '#E8F8F8',
               showConfirmButton: false,
-              timer: 2000
+              timer: 3000
             });
 
             this.getProducts(); // consulta productos con los cambios realizados
@@ -245,9 +249,9 @@ export class ProductComponent {
               icon: 'error',
               toast: true,
               showConfirmButton: false,
-              text: err.error.message,
+              text: "No se pudo activar el producto",
               background: '#F8E8F8',
-              timer: 2000
+              timer: 3000
             });
           }
         );
@@ -268,9 +272,9 @@ export class ProductComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se encontraron productos activos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -281,6 +285,17 @@ export class ProductComponent {
     this.productService.getProducts().subscribe(
       res => {
         this.products = res.filter(el => el.status == 0);
+        if (this.products.length == 0) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            toast: true,
+            showConfirmButton: false,
+            text: "No se encontraron productos inactivos ",
+            background: 'white',
+            timer: 3000
+          });
+        }
       },
       err => {
         // muestra mensaje de error
@@ -289,9 +304,9 @@ export class ProductComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -301,7 +316,18 @@ export class ProductComponent {
     console.log(category_id);
     this.productService.getProductsByCategory(category_id).subscribe(
       res => {
-        this.products = res; // asigna la respuesta de la API a la lista de productos
+        this.products = res;
+        if (this.products.length == 0) {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            toast: true,
+            showConfirmButton: false,
+            text: "No se encotraron productos en está categoría",
+            background: '#FFEFFF',
+            timer: 3000
+          });
+        }
       },
       err => {
         // muestra mensaje de error
@@ -310,9 +336,9 @@ export class ProductComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -340,9 +366,9 @@ export class ProductComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -357,7 +383,7 @@ export class ProductComponent {
         showConfirmButton: false,
         text: "Producto desactivado",
         background: '#F8E8F8',
-        timer: 2000
+        timer: 3000
       });
       return;
     }
@@ -370,7 +396,6 @@ export class ProductComponent {
     this.cartService.addToCart(newCart).subscribe(
       (res: any) => {
         this.cart = res;
-        console.log("cantidad actualizada");
         this.updateStock(product, -quantity);
       },
       err => {
@@ -380,9 +405,9 @@ export class ProductComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo añadir al carrito",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );

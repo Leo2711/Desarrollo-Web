@@ -42,10 +42,24 @@
     margin-bottom: 20px;
 }
 
+.contenedeor {
+    padding-bottom: 40px;
+}
+
 .card-body {
-    position: relative;
-    margin-bottom: 25px;
-    padding: 20px;
+    position: relative;    
+    padding: 20px;    
+}
+
+/* Pagination */
+
+.pagination-controls {
+    margin: 0;
+    padding-top: 20px;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
 }
 
 /* Titulo */

@@ -15,10 +15,13 @@ export class CartComponent {
 
   cart: any | Cart[] = [];
   count: any | number = 0;
-  rfc: any | string = "";
-  subtotal: any | number = 0;
+  rfc: any | string = "";  
   total: number = 0;
-  empty : boolean = true;
+  empty : boolean = false;
+
+  sortStatus = true;
+  currentPage = 1;
+  itemsPerPage = 10;
 
   constructor(
     private route: ActivatedRoute, // recupera parámetros de la url
@@ -32,9 +35,12 @@ export class CartComponent {
     this.rfc = localStorage.getItem('user_rfc');
     if (this.rfc) {
       this.getCart();
-      this.getTotal();
-    }
-    this.empty = !(this.cart.lenght > 0);    
+    }        
+  }
+
+  // Función para cambiar la página
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
   }
 
   // addToCart -> product
@@ -45,10 +51,13 @@ export class CartComponent {
         this.updateStock(item.gtin, item.quantity);
         this.cart = res;
         Swal.fire({
-          title: 'Producto eliminado',
+          position: 'top-end',
           icon: 'success',
+          toast: true,
           showConfirmButton: false,
-          timer: 1500
+          text: "Producto eliminado", 
+          background: '#E8F8F8',         
+          timer: 3000
         })
         this.getCart();
       },
@@ -59,9 +68,9 @@ export class CartComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo eliminar el producto",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -72,52 +81,50 @@ export class CartComponent {
       (res: any) => {
         console.log("stock actualizado");
       },
-      err => {
-        console.log("stock NO actualizado");
+      err => {        
         // muestra mensaje de error
         Swal.fire({
           position: 'top-end',
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar el stock",
           background: '#FFEFFF',
-          timer: 2000
+          timer: 3000
         });
       }
     );
   }
 
   updateQuantity(gtin: string, quantity: number) {
-    this.productService.updateProductStock(gtin, quantity).subscribe(
-      (res: any) => {
-        console.log("stock actualizado");
+    let newCart : Cart = this.cart.find((el: { gtin: string; }) => el.gtin == gtin);
+    newCart.quantity = quantity;
+    this.cartService.addToCart(newCart).subscribe(
+      res => {        
+        this.updateStock(gtin, -quantity);                        
         this.getCart();
       },
-      err => {
-        console.log("stock NO actualizado");
+      err => {        
         // muestra mensaje de error
         Swal.fire({
           position: 'top-end',
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar la cantidad",
           background: '#FFEFFF',
-          timer: 2000
+          timer: 3000
         });
-      }
-    );
+      }      
+    );    
   }
 
   getCart() {
     this.cartService.getCart(this.rfc).subscribe(
-      (data: any) => {
-        this.cart = data;
-        this.cart.forEach((element: Cart) => {
-          this.count += element.quantity;
-        });
-        this.cartService.updateCount(this.count);
+      res => {
+        this.cart = res;
+        this.empty = this.cart.length === 0;
+        this.getTotal();        
       },
       err => {
         // muestra mensaje de error
@@ -126,9 +133,9 @@ export class CartComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -136,14 +143,18 @@ export class CartComponent {
 
   deleteCart(){
     this.cartService.deleteCart(this.rfc).subscribe(
-      (data: any) => {
-        this.cart = data;
+      res => {
+        this.count = 0;    
         Swal.fire({
-          title: 'Carrito vaciado',
+          position: 'top-end',
           icon: 'success',
+          toast: true,
           showConfirmButton: false,
-          timer: 1500
+          text: "Se vacio el carrito", 
+          background: '#E8F8F8',         
+          timer: 3000
         })
+        this.getCart();
       },
       err=>{
         // muestra mensaje de error
@@ -152,9 +163,9 @@ export class CartComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo vaciar el carrito",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -163,21 +174,30 @@ export class CartComponent {
   getTotal() {
     this.cartService.getCart(this.rfc).subscribe(
       res => {
+        this.total = 0;
+        this.count = 0;        
         res.forEach(element => {
+          this.count += element.quantity;
           this.total += element.product.price * element.quantity;
         });
+        this.cartService.updateCount(this.count);
       }
     )
   }
 
   generateInvoice() {
+    this.removeZeros();
+    this.getCart();
     this.invoiceService.generateInvoice(this.rfc).subscribe(
       res => {        
         Swal.fire({
-          title: 'Factura generada',
+          position: 'top-end',
           icon: 'success',
+          toast: true,
           showConfirmButton: false,
-          timer: 1500
+          text: "Factura generada", 
+          background: '#E8F8F8',         
+          timer: 3000
         })
         this.getCart();
       },
@@ -188,12 +208,20 @@ export class CartComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo generar la factura",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
+  }
+
+  removeZeros() {
+    this.cart.forEach((element: Cart) => {
+      if (element.quantity == 0) {
+        this.removeFromCart(element);
+      }
+    });
   }
 
   redirect(url: string[]){
@@ -201,3 +229,4 @@ export class CartComponent {
   }
 
 }
+

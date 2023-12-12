@@ -52,9 +52,9 @@ export class InvoiceComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -72,9 +72,9 @@ export class InvoiceComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se encontró el usuario",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );

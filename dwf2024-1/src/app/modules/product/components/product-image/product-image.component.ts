@@ -61,7 +61,7 @@ export class ProductImageComponent {
         showConfirmButton: false,
         text: 'Id de producto inválido',
         background: '#F8E8F8',
-        timer: 2000
+        timer: 3000
       });
     }
   }
@@ -81,9 +81,9 @@ export class ProductImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se encontró el producto",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -102,10 +102,10 @@ export class ProductImageComponent {
           position: 'top-end',
           icon: 'success',
           toast: true,
-          text: 'El cliente ha sido actualizado',
+          text: 'El producto ha sido actualizado',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         if(this.form.controls['gtin'].value != this.gtin){
@@ -131,9 +131,9 @@ export class ProductImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar el producto",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -171,7 +171,7 @@ export class ProductImageComponent {
           text: 'La imagen ha sido actualizada',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         this.getProduct(); // consulta el cliente con los cambios realizados
@@ -185,9 +185,9 @@ export class ProductImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar la imagen",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -208,7 +208,7 @@ export class ProductImageComponent {
           text: 'La imagen ha sido eliminada',
           background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
 
         this.getProduct(); // consulta el cliente con los cambios realizados
@@ -222,9 +222,9 @@ export class ProductImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo eliminar la imagen",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -235,7 +235,7 @@ export class ProductImageComponent {
   getCategories(){
     this.categoryService.getCategories().subscribe(
       res => {
-        this.categories = res; // asigna la respuesta de la API a la lista de categoryes
+        this.categories = res;
       },
       err => {
         // muestra mensaje de error
@@ -244,9 +244,9 @@ export class ProductImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );
@@ -257,7 +257,7 @@ export class ProductImageComponent {
   getCategory(category_id: number){
     this.categoryService.getCategory(category_id).subscribe(
       res => {
-        this.category = res; // asigna la respuesta de la API a la lista de categories
+        this.category = res;
       },
       err => {
         // muestra mensaje de error
@@ -266,9 +266,9 @@ export class ProductImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo obtener la categoría",
           background: '#F8E8F8',
-          timer: 2000
+          timer: 3000
         });
       }
     );

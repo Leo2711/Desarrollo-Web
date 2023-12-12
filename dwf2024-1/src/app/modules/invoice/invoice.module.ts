@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InvoiceComponent } from './components/invoice/invoice.component';
 import { CartComponent } from './components/cart/cart.component';
 import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { InvoiceListComponent } from './components/invoice-list/invoice-list.com
   imports: [
     CommonModule,
     FormsModule,
+    NgxPaginationModule,
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule
