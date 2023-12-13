@@ -78,7 +78,7 @@
             class="container d-flex justify-content-center">
             <figure class="cardp card-product-grid card-lg">
               <a class="img-wrap" data-abc="true" (click)="showProduct(products[i].gtin)">
-                <img src="{{ productImgs[i] ? 'assets/imagenes/'+productImgs[i].image : 'assets/img/no-product-image.png'}}" class="d-block w-100" alt="...">
+                <img src="{{ productImgs.get(products[i].product_id) ? 'assets/imagenes/'+productImgs.get(products[i].product_id) : 'assets/img/no-product-image.png'}}" class="d-block w-100" alt="...">
               </a>
               <figcaption class="info-wrap">
                 <div class="row">
