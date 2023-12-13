@@ -87,7 +87,7 @@ export class CustomerImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo obtener el usuario",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -137,7 +137,7 @@ export class CustomerImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar al cliente",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -191,11 +191,10 @@ export class CustomerImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar la imagen",
           background: '#F8E8F8',
           timer: 2000
-        });
-        console.log(err.error.message);
+        });        
       }
     );
   }
@@ -214,7 +213,7 @@ export class CustomerImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -236,7 +235,7 @@ export class CustomerImageComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se encontró la región",
           background: '#F8E8F8',
           timer: 2000
         });

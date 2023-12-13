@@ -46,7 +46,7 @@ export class RouterNavbarComponent implements OnDestroy {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo obtener el usuario",
           background: '#F8E8F8',
           timer: 2000
         });

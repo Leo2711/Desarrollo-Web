@@ -185,15 +185,14 @@ export class ProductComponent {
       (res: any) => {
         console.log("stock actualizado");
       },
-      err => {
-        console.log("stock NO actualizado");
+      err => {        
         // muestra mensaje de error
         Swal.fire({
           position: 'top-end',
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo actualizar el stock",
           background: '#FFEFFF',
           timer: 3000
         });

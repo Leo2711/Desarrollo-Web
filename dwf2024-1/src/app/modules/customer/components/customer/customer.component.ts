@@ -81,7 +81,7 @@ export class CustomerComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -120,7 +120,7 @@ export class CustomerComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo registrar el cliente",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -153,7 +153,7 @@ export class CustomerComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo deshabilitar el cliente",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -184,7 +184,7 @@ export class CustomerComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se pudo habilitar alcliente",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -202,10 +202,14 @@ export class CustomerComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se encontró al cliente",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -228,7 +232,7 @@ export class CustomerComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "Error al cargar los datos",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -248,7 +252,7 @@ export class CustomerComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se encontraron clientes inactivos",
           background: '#F8E8F8',
           timer: 2000
         });
@@ -268,7 +272,7 @@ export class CustomerComponent {
           icon: 'error',
           toast: true,
           showConfirmButton: false,
-          text: err.error.message,
+          text: "No se encontraron clientes activos",
           background: '#F8E8F8',
           timer: 2000
         });

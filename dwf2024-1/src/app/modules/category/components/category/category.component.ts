@@ -85,10 +85,14 @@ export class CategoryComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: 'Algo salió mal al obtener los datos.'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "Error al cargar los datos",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -97,11 +101,14 @@ export class CategoryComponent {
     this.categoryService.createCategory(this.form.value).subscribe(
       res => {
         Swal.fire({
+          position: 'top-end',
           icon: 'success',
-          title: 'Nueva categoría creada',
+          toast: true,
+          text: 'Categoría creada',
+          background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 2000
+        });
 
         this.getCategories();
 
@@ -109,10 +116,14 @@ export class CategoryComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal al crear los datos!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se pudo crear la categoría",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -122,11 +133,14 @@ export class CategoryComponent {
       res => {
         // mensaje de confirmación      
         Swal.fire({
+          position: 'top-end',
           icon: 'success',
-          title: 'Categoría actualizada!',
+          toast: true,
+          text: 'Categoría actualizada',
+          background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 2000
+        });
         this.getCategories();
 
         $("#modalForm").modal("hide");
@@ -135,10 +149,14 @@ export class CategoryComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal al actualizar los datos!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se pudo actualizr la categoría",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -154,10 +172,14 @@ export class CategoryComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se encontró la categoría",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -177,19 +199,26 @@ export class CategoryComponent {
     this.categoryService.deleteCategory(id).subscribe(
       res => {
         Swal.fire({
+          position: 'top-end',
           icon: 'success',
-          title: 'Categoría deshabilitada!',
+          toast: true,
+          text: 'Categoría deshabilitada',
+          background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 2000
+        });
         this.getCategories();
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo deshabilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se pudo eliminar la categoría",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -198,19 +227,26 @@ export class CategoryComponent {
     this.categoryService.activateCategory(id).subscribe(
       res => {
         Swal.fire({
+          position: 'top-end',
           icon: 'success',
-          title: 'Categoría habilitada!',
+          toast: true,
+          text: 'Categoría habilitada',
+          background: '#E8F8F8',
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 2000
+        });
         this.getCategories();
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se pudo activar la categoría",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -223,10 +259,14 @@ export class CategoryComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: '¡Algo salió mal, no se pudo habilitar el elemento!'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se encontraron categorías activas",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
@@ -240,10 +280,14 @@ export class CategoryComponent {
       },
       err => {
         Swal.fire({
+          position: 'top-end',
           icon: 'error',
-          title: 'Oops...',
-          text: 'Algo salió mal al obtener los datos.'
-        })
+          toast: true,
+          showConfirmButton: false,
+          text: "No se encontraron categorías inactivas",
+          background: '#F8E8F8',
+          timer: 2000
+        });
       }
     );
   }
