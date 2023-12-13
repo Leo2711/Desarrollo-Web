@@ -165,6 +165,7 @@ export class ProductComponent {
         console.log(res);
         console.log(this.products.filter(el => el.gtin == gtin));
         this.products = [res];
+        this.items = [0];
       },
       err => {
         Swal.fire({
