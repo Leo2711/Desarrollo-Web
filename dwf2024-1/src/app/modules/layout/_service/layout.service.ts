@@ -10,8 +10,7 @@ export class LayoutService {
 
   constructor() {}
 
-  updateLayout(newValue: number): void {
-    console.log(this.layout$);
+  updateLayout(newValue: number): void {    
     this.layoutSubject.next(newValue);
   }
 }

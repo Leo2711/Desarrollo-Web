@@ -35,7 +35,8 @@
                         <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row align-items-center">
                                 <div>
-                                    <img src="" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                                    <img src="{{ item.image? 'assets/imagenes/'+item.image : 'assets/img/no-product-image.png'}}"
+                                    class="img-fluid rounded-3" alt="Shopping item" style="height: 100px;">
                                 </div>
                                 <div class="ms-3">
                                     <h5> {{ item.product.product }} </h5>

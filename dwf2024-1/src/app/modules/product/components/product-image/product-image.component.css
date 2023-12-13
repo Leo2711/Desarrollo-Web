@@ -25,7 +25,7 @@
 .edit-product-image,
 .btn-return {
     color: blue;
-    margin-bottom: 16px;
+    margin-top: 10px;
 }
 
 /* Contenedor */
@@ -267,4 +267,40 @@ table:not(.id) {
 
 .color-red {
     color: red;
+}
+
+.carousel {
+    padding-bottom: 10px;
+}
+
+.carousel-control-prev-icon, 
+.carousel-control-next-icon {    
+    background-color: lightgray;
+    border-radius: 8px;
+    height: 40px;
+    width: 32px;
+}
+
+.indicator {
+    background-color: lightgray;    
+}
+
+.indicator:hover,
+.carousel-control-prev-icon:hover, 
+.carousel-control-next-icon:hover {    
+    background-color: gray;
+}
+
+.carousel-del {
+    position: absolute;
+    right: 0;
+    top: 15px;    
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;    
+     margin-right: 5%;    
+}
+
+.trash {
+    font-size: 20px;
 }

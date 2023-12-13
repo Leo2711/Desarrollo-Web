@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../_models/product';
 import { ProductService } from '../../_services/product.service';
 
-import Swal from'sweetalert2'; // sweetalert
+import Swal from 'sweetalert2'; // sweetalert
 import { FormBuilder, Validators } from '@angular/forms';
 import { Category } from '../../../category/_models/category';
 import { CategoryService } from '../../../category/_services/category.service';
@@ -13,6 +13,7 @@ import { ProductImage } from '../../_models/product-image';
 import { CartService } from 'src/app/modules/invoice/_services/cart.service';
 import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 import { Cart } from 'src/app/modules/invoice/_models/cart';
+import { DtoProductList } from '../../_dtos/dto-product-list';
 
 declare var $: any; // jquery
 
@@ -26,6 +27,7 @@ export class ProductImageComponent {
   product: any | Product = new Product(); // cliente consultado
   gtin: any | string = ""; // gtin del producto consultado
 
+  productImgs: ProductImage[] = [];
   categories: Category[] = []; // lista de categorías
   category: any | Category = new Category(); // datos de la categoría del producto
   cart: any | Cart[] = [];
@@ -53,14 +55,14 @@ export class ProductImageComponent {
     private cartService: CartService,
     private layoutService: LayoutService,
     private service: NgxPhotoEditorService
-  ){}
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.rfc = localStorage.getItem('user_rfc');
     this.gtin = this.route.snapshot.paramMap.get('gtin');
-    if(this.gtin){
+    if (this.gtin) {
       this.getProduct();
-    }else{
+    } else {
       Swal.fire({
         position: 'top-end',
         icon: 'error',
@@ -78,11 +80,21 @@ export class ProductImageComponent {
 
   // CRUD product
 
-  getProduct(){
+  getProductImages(id: number) {    
+    this.productImageService.getProductImages(id).subscribe(
+      (res: ProductImage[]) => {
+        this.productImgs = res;
+        console.log("Imgs: ",this.productImgs);
+      }
+    );
+  }
+
+  getProduct() {
     this.productService.getProduct(this.gtin).subscribe(
       res => {
         this.product = res; // asigna la respuesta de la API a la variable de cliente
         this.getCategory(this.product.category_id);
+        this.getProductImages(this.product.product_id);
       },
       err => {
         // muestra mensaje de error
@@ -168,12 +180,12 @@ export class ProductImageComponent {
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     // valida el formulario
     this.submitted = true;
-    if(this.form.invalid) return;
-    this.submitted = false;    
-    
+    if (this.form.invalid) return;
+    this.submitted = false;
+
     this.productService.updateProduct(this.form.value, this.product.product_id).subscribe(
       res => {
         // muestra mensaje de confirmación
@@ -187,20 +199,20 @@ export class ProductImageComponent {
           timer: 3000
         });
 
-        if(this.form.controls['gtin'].value != this.gtin){
+        if (this.form.controls['gtin'].value != this.gtin) {
           this.gtin = this.form.controls['gtin'].value!; // actualizamos el gtin
 
           // sustituimos en la url el nuevo gtin
           let currentUrl = this.router.url.split("/");
           currentUrl.pop();
           currentUrl.push(this.gtin);
-          
+
           // actualizamos la url con el nuevo rfc
           this.redirect(currentUrl);
         }
 
         this.getProduct(); // consulta el cliente con los cambios realizados
-    
+
         $("#modalForm").modal("hide"); // oculta el modal de registro
       },
       err => {
@@ -218,7 +230,7 @@ export class ProductImageComponent {
     );
   }
 
-  updateProduct(){
+  updateProduct() {
     this.form.reset();
     this.submitted = false;
     this.getCategories();
@@ -235,9 +247,9 @@ export class ProductImageComponent {
 
   // product image
 
-  updateProductImage(image: string){
+  updateProductImage(image: string) {
     let productImage: ProductImage = new ProductImage();
-    productImage.product_image_id = this.product.product_image_id;
+    productImage.product_id = this.product.product_id;
     productImage.image = image;
 
     this.productImageService.uploadProductImage(productImage).subscribe(
@@ -254,7 +266,7 @@ export class ProductImageComponent {
         });
 
         this.getProduct(); // consulta el cliente con los cambios realizados
-    
+
         $("#modalForm").modal("hide"); // oculta el modal de registro
       },
       err => {
@@ -271,13 +283,9 @@ export class ProductImageComponent {
       }
     );
   }
-  
-  deleteProductImage(image: string){
-    let productImage: ProductImage = new ProductImage();
-    productImage.product_image_id = this.product.product_image_id;
-    productImage.image = image;
 
-    this.productImageService.deleteProductImage(productImage.product_image_id).subscribe(
+  deleteProductImage(id: number) {    
+    this.productImageService.deleteProductImage(id).subscribe(
       res => {
         // muestra mensaje de confirmación
         Swal.fire({
@@ -291,7 +299,7 @@ export class ProductImageComponent {
         });
 
         this.getProduct(); // consulta el cliente con los cambios realizados
-    
+
         $("#modalForm").modal("hide"); // oculta el modal de registro
       },
       err => {
@@ -311,7 +319,7 @@ export class ProductImageComponent {
 
   // catalogues
 
-  getCategories(){
+  getCategories() {
     this.categoryService.getCategories().subscribe(
       res => {
         this.categories = res;
@@ -333,7 +341,7 @@ export class ProductImageComponent {
 
   // auxiliary functions
 
-  getCategory(category_id: number){
+  getCategory(category_id: number) {
     this.categoryService.getCategory(category_id).subscribe(
       res => {
         this.category = res;
@@ -364,7 +372,7 @@ export class ProductImageComponent {
     });
   }
 
-  redirect(url: string[]){
+  redirect(url: string[]) {
     this.router.navigate(url);
   }
 }

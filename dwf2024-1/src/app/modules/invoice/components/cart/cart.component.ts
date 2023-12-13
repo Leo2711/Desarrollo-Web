@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InvoiceService } from '../../_services/invoice.service';
 import { ProductService } from 'src/app/modules/product/_services/product.service';
 import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
+import { DtoCartDetails } from '../../_dtos/dto-cart-details';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,7 @@ import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 })
 export class CartComponent {
 
-  cart: any | Cart[] = [];
+  cart: any | DtoCartDetails[] = [];
   count: any | number = 0;
   rfc: any | string = "";  
   total: number = 0;

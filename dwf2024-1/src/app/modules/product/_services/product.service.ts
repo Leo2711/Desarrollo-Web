@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DtoProductList } from '../_dtos/dto-product-list';
+import { Product } from '../_models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ProductService {
   }
 
   getProduct(gtin: string) {
-    return this.http.get<DtoProductList>(this.url + this.route + "/" + gtin);
+    return this.http.get<Product>(this.url + this.route + "/" + gtin);
   }
 
   updateProductStock(gtin: string, stock: number) {

@@ -74,26 +74,26 @@
       <div class="col-md-9">
         <div class="card-deck">
           <div
-            *ngFor="let product of products | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: products.length}"
+            *ngFor="let i of items | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: products.length}"
             class="container d-flex justify-content-center">
             <figure class="cardp card-product-grid card-lg">
-              <a class="img-wrap" data-abc="true" (click)="showProduct(product.gtin)">
-                <img src="/assets/img/no-product-image.png" alt="..." class="img-thumbnail product-image">
+              <a class="img-wrap" data-abc="true" (click)="showProduct(products[i].gtin)">
+                <img src="{{ productImgs[i] ? 'assets/imagenes/'+productImgs[i].image : 'assets/img/no-product-image.png'}}" class="d-block w-100" alt="...">
               </a>
               <figcaption class="info-wrap">
                 <div class="row">
                   <div class="col-md-7 col-xs-7">
-                    <a class="title id" data-abc="true"> {{ product.product }} </a>
-                    <span class="rated"> #{{ product.gtin }} </span>
+                    <a class="title id" data-abc="true"> {{ products[i].product }} </a>
+                    <span class="rated"> #{{ products[i].gtin }} </span>
                   </div>
                   <div class="col-md-3 col-xs-3">
                     <div class="rating text-right">
                       <div class="td-status cursor-pointer"
-                        [ngClass]="{'td-status-enable': product.status == 1, 'td-status-disable': product.status == 0}">
-                        <a *ngIf="product.status == 0" (click)="enableProduct(product.product_id)">
+                        [ngClass]="{'td-status-enable': products[i].status == 1, 'td-status-disable': products[i].status == 0}">
+                        <a *ngIf="products[i].status == 0" (click)="enableProduct(products[i].product_id)">
                           {{ "Inactivo" }}
                         </a>
-                        <a *ngIf="product.status == 1" (click)="disableProduct(product.product_id)">
+                        <a *ngIf="products[i].status == 1" (click)="disableProduct(products[i].product_id)">
                           {{ "Activo" }}
                         </a>
                       </div>
@@ -106,18 +106,18 @@
                   <div class="row">
                     <div class="col-md-6 col-xs-6">
                       <a class="title id" data-abc="true">
-                        {{ product.price | currency: 'MXN'}} </a>
+                        {{ products[i].price | currency: 'MXN'}} </a>
                     </div>
                     <div class="col-md-6 col-xs-6">
-                      <div class="rating text-right"> {{ getCategory(product.category_id) }} </div>
+                      <div class="rating text-right"> {{ getCategory(products[i].category_id) }} </div>
                     </div>
                   </div>
                 </figcaption>
               </div>
               <div class="bottom-wrap footer">
-                <a class="btn btn-primary float-right" data-abc="true" (click)="addToCart(product)"> Añadir </a>
+                <a class="btn btn-primary float-right" data-abc="true" (click)="addToCart(products[i])"> Añadir </a>
                 <div class="price-wrap">
-                  <a class="btn btn-warning float-left" (click)="showProduct(product.gtin)"> Detalles </a>
+                  <a class="btn btn-warning float-left" (click)="showProduct(products[i].gtin)"> Detalles </a>
                 </div>
               </div>
             </figure>

@@ -11,6 +11,8 @@ import { CartService } from 'src/app/modules/invoice/_services/cart.service';
 import { LayoutService } from 'src/app/modules/layout/_service/layout.service';
 
 import Swal from 'sweetalert2'; // sweetalert
+import { ProductImageService } from '../../_services/product-image.service';
+import { ProductImage } from '../../_models/product-image';
 
 declare var $: any; // jquery
 
@@ -20,6 +22,9 @@ declare var $: any; // jquery
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
+
+  items: number[] = [];
+  productImgs: ProductImage[] = [];
   products: DtoProductList[] = []; // lista de productos
   categories: Category[] = []; // lista de categorías
   cart: any | Cart[] = [];
@@ -50,7 +55,8 @@ export class ProductComponent {
     private formBuilder: FormBuilder, // formulario
     private productService: ProductService, // servicio product de API
     private router: Router, // redirigir a otro componente
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private productImageService: ProductImageService
   ) { }
 
   // primera función que se ejecuta
@@ -84,10 +90,16 @@ export class ProductComponent {
   getProducts(sort: string = 'todo') {
     this.sortStatus = true;
     this.selectedOption = sort;
-    this.selectedCategory = 0;
+    this.selectedCategory = 0;    
     this.productService.getProducts().subscribe(
       res => {
         this.products = res.sort((a, b) => a.product_id - b.product_id);
+        this.products.forEach(element => {
+          this.getProductImages(element.product_id);
+        });
+        for (let i = 0; i < this.products.length; i++) {
+          this.items.push(i);
+        }
         this.cartService.getCount().subscribe(count => {
           this.layoutService.updateLayout(count);
         });
@@ -445,6 +457,14 @@ export class ProductComponent {
     this.cartService.getCount().subscribe(count => {
       this.layoutService.updateLayout(count);
     });
+  }
+
+  getProductImages(id: number) {    
+    this.productImageService.getProductImages(id).subscribe(
+      (res: ProductImage[]) => {
+        this.productImgs.push(res[0]);        
+      }
+    );
   }
 }
 
