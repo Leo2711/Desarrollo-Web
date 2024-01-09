@@ -1,30 +1,96 @@
-/* @author Mónica Miranda Mijangos 
-  @author Eduardo Leónel Sánchez Velasco 
-  Version: 2
-  Fecha: 16/10/2023 */
+/*  @author Mónica Miranda Mijangos 
+    @author Eduardo Leónel Sánchez Velasco 
+    Version: 3
+    Fecha: 11/12/2023 */
+
+/* Contenedor */    
 
 .card {
-    max-width: 1080px;
+    max-width: 1280px;
     margin: auto;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
+
+.card-body {
+    position: relative;
+    margin-bottom: 25px;
+    padding: 20px;
+}
+
+/* Titulo */
 
 h1 {
     color: #78c2ad !important;
+    padding-bottom: 5px;
 }
 
-table:not(.A) {
-    text-align: center;
-}
-
-.A {
-    text-align: left;
-}
+/* Boton Agregar */
 
 .botonDer {
     position: absolute;
-    right: 10px;
-    top: 15px;
+    right: 2%;
+    top: 25px;
+}
+
+.btn-new {
+    float: right;
+    width: 180px;
+    font-weight: 500;
+}
+
+/* Oplus  */
+
+.icon-text-button {
+    font-size: 25px;
+    display: table-cell;
+    padding-left: 2px;
+}
+
+.new-cat {
+    display: table-cell;
+    padding-left: 8px;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+/* Buscador */
+
+.input-group-text {
+    color: #8181A5;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.input-group-text:hover {
+    color: black;
+}
+
+.btn-outline-secondary {
+    color: white;
+    background-color: #0d6efd;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #0b5ed7;
+}
+
+
+/* Tabla */
+
+table:not(.id) {
+    text-align: center;
+}
+
+/* Header */
+
+.id {
+    text-align: left;
+    font-weight: bold;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }
 
 /* Modal */
@@ -34,7 +100,11 @@ table:not(.A) {
 }
 
 .modal-header {
-    padding: 8px 16px !important;
+    padding: 8px 16px !important;    
+}
+
+.modal-title {
+    font-weight: 500;
 }
 
 .form-group {
@@ -49,6 +119,8 @@ table:not(.A) {
 
 .btn-form {
     width: 100px;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .modal-close-button {
@@ -61,52 +133,48 @@ table:not(.A) {
     font-size: 32px;
 }
 
-/* Color  */
+/* Estatus */
 
-.color-red {
-    color: red;
-}
-
-.btn-new {
-    float: right;
-    width: 200px;
-    font-weight: 450;    
-}
-
-/* Icons  */
-
-.icon-text-button {
-    font-size: 20px;
-    margin-right: 2px;    
-}
-
-/* Status */
-
-.td-status-enable {    
+.td-status-enable {
     width: 100px;
     margin: auto;
     background-color: #78c2ad;
     color: white;
     border-radius: 18px;
+    vertical-align: middle;
 }
 
-.td-status-disable {    
+.td-status-disable {
     width: 100px;
     margin: auto;
     background-color: #f3969a;
     color: white;
     border-radius: 18px;
+    vertical-align: middle;
+}
+
+/* Dropdown  */
+
+.dropdown-button {
+    border: none;
+    background-color: transparent;
+}
+
+.dropdown-button:hover {
+    border: none;
+    background-color: transparent;
 }
 
 /* Dots */
 
 .icon-text-ul {
-    font-size: 16px;
-    margin-right: 8px;
+    font-size: 20px;
+    margin-right: 0;
+    display: table-cell;
 }
 
 .icon-menu {
-    font-size: 17px;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -114,27 +182,27 @@ table:not(.A) {
     color: blue;
 }
 
-/* ul dropdown  */
-
-.dropdown-button {
-    border: none;
-    background-color: white;
+.item-txt {
+    display: table-cell;
+    padding-left: 10px;
+    vertical-align: middle;  
+    font-size: 14px;  
 }
 
-.dropdown-button:hover {
-    border: none;
-    background-color: #e8e8e8;
-}
+/* Editar */
 
-.dropdown-item {
+.edit-item {
     color: black !important;
     cursor: pointer;
+    vertical-align: middle;
 }
 
-.dropdown-item:hover {
-    color: white !important;
-    background-color: #6cc3d5;
+.edit-item:hover {
+    color: black !important;
+    background-color: #cfe2ff;
 }
+
+/* Activar */
 
 .enable-item {
     color: #78c2ad !important;
@@ -146,6 +214,8 @@ table:not(.A) {
     background-color: #78c2ad;
 }
 
+/* Desactivar */
+
 .disable-item {
     color: #f3969a !important;
     cursor: pointer;
@@ -154,4 +224,20 @@ table:not(.A) {
 .disable-item:hover {
     color: white !important;
     background-color: #f3969a;
+}
+
+/* Pagination */
+
+.pagination-controls {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+/* Colores  */
+
+.color-red {
+    color: red;
 }

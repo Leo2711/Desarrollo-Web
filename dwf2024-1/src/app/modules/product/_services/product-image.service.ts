@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductImage } from '../_models/product-image';
-// import { ProductImage } from '../_dtos/dto-producct_image-list';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +12,15 @@ export class ProductImageService {
 
   constructor(private http: HttpClient) { }
 
-  createProductImage(product_image: any) {
+  uploadProductImage(product_image: any) {
     return this.http.post(this.url + this.route, product_image);
-  }
-  
-  deleteProductImage(id: number) {
-    return this.http.delete(this.url + this.route + "/" + id);
   }
   
   getProductImages(product_id: number) {
     return this.http.get<ProductImage[]>(this.url + this.route + "/" + product_id);
+  }
+
+  deleteProductImage(product_image_id: number) {
+    return this.http.delete(this.url + this.route + "/" + product_image_id);
   }
 }

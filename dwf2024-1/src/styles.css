@@ -2896,14 +2896,6 @@ fieldset:disabled a.btn {
     border-color: #f6c23e;
 }
 
-.btn-warning:not(:disabled):not(.disabled):active,
-.btn-warning:not(:disabled):not(.disabled).active,
-.show>.btn-warning.dropdown-toggle {
-    color: #fff;
-    background-color: #f4b30d;
-    border-color: #e9aa0b;
-}
-
 .btn-warning:not(:disabled):not(.disabled):active:focus,
 .btn-warning:not(:disabled):not(.disabled).active:focus,
 .show>.btn-warning.dropdown-toggle:focus {
